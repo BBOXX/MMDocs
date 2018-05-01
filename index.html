@@ -271,95 +271,126 @@
         <h1 id='bboxx-rest-api'>BBOXX REST API</h1><h2 id='introduction'>Introduction</h2>
 <p>The  HTTP(S) POST Notification API is designed to help developers integrate third-party applications with BBOXX Mobile Money-system. This guide provides the technical information about integrating and configuring a system by  using RESTful HTTP(S) POST to recieve notification of Mobile Money transaction information. Companies can use this API to allow real-time mobile money transactions to be processed via Pulse. This document describes the HTTP POST parameters and the format of the expected response.
 Synchronous or Near Real-Time Transactions.</p>
-<h2 id='authentication'>Authentication</h2>
-<p>To authenticate the user and ensuring data integrity, a secure Message Authentication Code (HMAC) is used.
-Technically, the HTTP header “Authorization” will be used for this additional security. The header will include both a
-client identifier and the hash value, e.g.:</p>
-<pre class="highlight python tab-python"><code>
-<span class="n">Authorization</span><span class="p">:</span> <span class="n">clientXYZ</span><span class="p">:</span><span class="n">uCMfSzkjue</span><span class="o">+</span><span class="n">HSDygYB5aEg</span><span class="o">==</span>
+<h2 id='authentication'>Authentication</h2><pre class="highlight python tab-python"><code><span class="c"># How to Generate the “Authorization” header in Python</span>
 
-</code></pre>
-<p>The hash mechanism uses is  HMAC-SHA1. HMAC allows you to both authenticate the
-client and verify the integrity of the request message. 
- HMAC is used as follows:</p>
+<span class="kn">import</span> <span class="nn">hmac</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha1</span>
 
-<p>The client combines the JSON message , the message ID , path variables and the shared key, applies the HMAC function and retrieves the hash output.</p>
+<span class="k">def</span> <span class="nf">generate_signature</span><span class="p">(</span><span class="n">shared_secret</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+    <span class="n">raw_signature</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">shared_secret</span><span class="p">,</span> <span class="n">payload</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'UTF-8'</span><span class="p">),</span> <span class="n">sha1</span><span class="p">)</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">raw_signature</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"base64"</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">signature</span>
 
-<p>The client adds the “Authorization” header to the request <br>
-The client sends the request <br>
-The server receives the messages and extracts the “Authorization” header <br>
-Based on the client id the server finds the shared secret <br>
-The server accepts the request if the two hash values are matching <br>
-In case the hash values don’t match a HTTP 403 (Forbidden) response should be sent. <br>
-Note: the resulting hash value should be encoded in the Base 64 encoding scheme. <br></p>
-<pre class="highlight python tab-python"><code>
-        <span class="kn">import</span> <span class="nn">hmac</span>
-        <span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha1</span>
+<span class="c"># Example Request Data</span>
+<span class="n">customerId</span>  <span class="o">=</span> <span class="s">"123"</span><span class="p">;</span>
+<span class="n">body</span>        <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Bob</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">amount</span><span class="se">\"</span><span class="s">:32}"</span>
+<span class="n">messageId</span>   <span class="o">=</span> <span class="s">"a2536ff7-886a-432d-a5ae-45ed9d12b016"</span>
+<span class="n">providerId</span>  <span class="o">=</span> <span class="s">"12345"</span>
 
-        <span class="n">dataencoded</span> <span class="o">=</span> <span class="n">body</span> <span class="o">+</span> <span class="n">MessageId</span> <span class="o">+</span> <span class="n">originId</span> <span class="o">+</span> <span class="n">CustomerId</span>
-        <span class="n">hashed</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">dataencoded</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'UTF-8'</span><span class="p">),</span> <span class="n">sha1</span><span class="p">)</span>
-        <span class="n">responseIntegrity</span> <span class="o">=</span> <span class="n">hashed</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"base64"</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
-        <span class="n">header_auth</span> <span class="o">=</span> <span class="n">CustomerId</span><span class="o">+</span><span class="s">':'</span><span class="o">+</span><span class="n">responseIntegrity</span>
+<span class="c"># Payload must be contructed in this order</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">body</span> <span class="o">+</span> <span class="n">messageId</span> <span class="o">+</span> <span class="n">providerId</span> <span class="o">+</span> <span class="n">customerId</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"test"</span>
+<span class="c"># Generate Signature</span>
+<span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="s">"supersecretkey"</span><span class="p">,</span><span class="n">payload</span><span class="p">)</span>
+<span class="c"># Construct Authorization Header</span>
+<span class="n">authHeader</span> <span class="o">=</span> <span class="s">"Authorization: "</span> <span class="o">+</span> <span class="n">customerId</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">signature</span><span class="p">;</span>
 
-</code></pre><pre class="highlight java tab-java"><code>
+<span class="k">print</span><span class="p">(</span><span class="n">authHeader</span><span class="p">)</span>
+
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// How to Generate the “Authorization” header in Java</span>
+
+<span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.security.NoSuchAlgorithmException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.security.InvalidKeyException</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.crypto.Mac</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.crypto.spec.SecretKeySpec</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.commons.codec.binary.Base64</span><span class="o">;</span> 
-<span class="kn">import</span> <span class="nn">org.apache.commons.io.IOUtils</span><span class="o">;</span> 
+<span class="kn">import</span> <span class="nn">org.apache.commons.io.IOUtils</span><span class="o">;</span>
 
-<span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"ResponseIntegrity"</span><span class="o">,</span> <span class="n">encodeHmac</span><span class="o">(</span><span class="err">“</span><span class="n">sharedSecret</span><span class="err">”</span><span class="o">,</span>
-                  <span class="n">jsonResponseFromServiceProviderToHub</span><span class="o">));</span>
-<span class="err">…</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span><span class="o">{</span>
 
-<span class="kd">protected</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">encodeHmac</span><span class="o">(</span><span class="n">String</span> <span class="n">sharedSecret</span><span class="o">,</span> <span class="n">String</span> <span class="n">message</span><span class="o">){</span>
- <span class="kt">byte</span><span class="o">[]</span> <span class="n">digest</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
- <span class="k">try</span> <span class="o">{</span>
-     <span class="n">Mac</span> <span class="n">mac</span> <span class="o">=</span> <span class="n">Mac</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"HmacSHA1"</span><span class="o">);</span>
-     <span class="n">SecretKeySpec</span> <span class="n">secret</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SecretKeySpec</span><span class="o">(</span><span class="n">sharedSecret</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">)),</span>
-    <span class="s">"HmacSHA1"</span><span class="o">);</span>
-     <span class="n">mac</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="n">secret</span><span class="o">);</span>
-     <span class="n">digest</span> <span class="o">=</span> <span class="n">mac</span><span class="o">.</span><span class="na">doFinal</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">)));</span>
-     <span class="o">}</span> <span class="k">catch</span><span class="o">(</span> <span class="n">NoSuchAlgorithmException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Response: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
- <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvalidKeyException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Response: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
- <span class="o">}</span>
-    <span class="k">return</span> <span class="n">Base64</span><span class="o">.</span><span class="na">encodeBase64String</span><span class="o">(</span><span class="n">digest</span><span class="o">);</span>
- <span class="o">}</span>
+    <span class="kd">protected</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">generateSignature</span><span class="o">(</span><span class="n">String</span> <span class="n">sharedSecret</span><span class="o">,</span> <span class="n">String</span> <span class="n">payload</span><span class="o">){</span>
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">raw_signature</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Mac</span> <span class="n">mac</span> <span class="o">=</span> <span class="n">Mac</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"HmacSHA1"</span><span class="o">);</span>
+            <span class="n">SecretKeySpec</span> <span class="n">secret</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SecretKeySpec</span><span class="o">(</span><span class="n">sharedSecret</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">)),</span>
+            <span class="s">"HmacSHA1"</span><span class="o">);</span>
+            <span class="n">mac</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="n">secret</span><span class="o">);</span>
+            <span class="n">raw_signature</span> <span class="o">=</span> <span class="n">mac</span><span class="o">.</span><span class="na">doFinal</span><span class="o">(</span><span class="n">payload</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">)));</span>
+        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span> <span class="n">NoSuchAlgorithmException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"Response: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvalidKeyException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"Response: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="k">return</span> <span class="n">Base64</span><span class="o">.</span><span class="na">encodeBase64String</span><span class="o">(</span><span class="n">raw_signature</span><span class="o">);</span>
+    <span class="o">}</span>
 
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">String</span> <span class="n">payload</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+
+        <span class="c1">// Example Request Data</span>
+        <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"{\"name\":\"Bob\",\"amount\":32}"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">messageId</span> <span class="o">=</span> <span class="s">"a2536ff7-886a-432d-a5ae-45ed9d12b016"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">providerId</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">customerId</span> <span class="o">=</span> <span class="s">"123"</span><span class="o">;</span>
+
+        <span class="c1">// Payload must be contructed in this order</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">body</span> <span class="o">+</span> <span class="n">messageId</span> <span class="o">+</span> <span class="n">providerId</span> <span class="o">+</span> <span class="n">customerId</span><span class="o">;</span>
+
+        <span class="n">String</span> <span class="n">signature</span> <span class="o">=</span> <span class="n">generateSignature</span><span class="o">(</span><span class="s">"supersecretkey"</span><span class="o">,</span><span class="n">payload</span><span class="o">);</span>
+
+        <span class="n">String</span> <span class="n">authHeader</span> <span class="o">=</span> <span class="s">"Authorization: "</span> <span class="o">+</span> <span class="n">customerId</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">signature</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">authHeader</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c">#  How to Generate the “Authorization” header in BASH</span>
+
+<span class="nv">body</span><span class="o">=</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Bob</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">amount</span><span class="se">\"</span><span class="s2">:32}"</span>
+<span class="nv">messageId</span><span class="o">=</span><span class="s2">"a2536ff7-886a-432d-a5ae-45ed9d12b016"</span>
+<span class="nv">providerId</span><span class="o">=</span><span class="s2">"12345"</span>
+<span class="nv">customerId</span><span class="o">=</span><span class="s2">"123"</span>
+
+<span class="k">function </span>generate_signature <span class="o">{</span>
+  <span class="nv">sharedSecret</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+  <span class="nv">payload</span><span class="o">=</span><span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span>
+  <span class="nb">echo</span> -n <span class="s2">"</span><span class="nv">$payload</span><span class="s2">"</span> | openssl dgst -binary -sha1 -hmac <span class="s2">"</span><span class="nv">$sharedSecret</span><span class="s2">"</span> | openssl base64
+<span class="o">}</span>
+
+<span class="nv">signature</span><span class="o">=</span><span class="sb">`</span>generate_signature supersecretkey <span class="nv">$body$messageId$providerId$customerId</span><span class="sb">`</span>
+<span class="nv">authHeader</span><span class="o">=</span><span class="s2">"Authorization: </span><span class="nv">$customerId</span><span class="s2">:</span><span class="nv">$signature</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="nv">$authHeader</span>
 </code></pre>
-<table><thead>
-<tr>
-<th>Name</th>
-<th>description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>body</td>
-<td>body content of the Request</td>
-</tr>
-<tr>
-<td>MessageId</td>
-<td>The value of the identifier is of the following format GUID, where each digit is a hexadecimal value.</td>
-</tr>
-<tr>
-<td>originId</td>
-<td>Unique identifier of the Mobile Money Provider</td>
-</tr>
-<tr>
-<td>CustomerId</td>
-<td>Unique identifier of the customer</td>
-</tr>
-</tbody></table>
+<p>Authentication is achieved by signing every HTTP request made to BBOXX.</p>
+
+<p>The HTTP header “Authorization” is be used to transport the signature this security. The “Authorization” header consists of a <code>customerId</code> and the <code>signature</code> seperated by a colon <code>:</code> example: <code>Authorization: &lt;customerId&gt;:&lt;signature&gt;</code></p>
+
+<p>The <code>customerId</code> is a unqiue identifier that represents the customer who made the payment.</p>
+
+<p>The <code>signature</code> is generated using the HMAC-SHA1 hashing mechanism.</p>
+
+<p>Steps to create the <code>Authorization</code> header:</p>
+
+<ol>
+<li>First, combine the following 4 fields into one large <code>payload</code> (<em>NOTE</em> The order is important): 
+
+<ul>
+<li>The Request body </li>
+<li>The <code>messageID</code> field</li>
+<li>The <code>providerId</code> field</li>
+<li>The <code>customerId</code> field</li>
+</ul></li>
+<li>Then make sure the <code>payload</code> is in &quot;UTF-8&quot; format.</li>
+<li>Then create the <code>raw_signature</code> by applying the HMAC SHA1 algorithm to the <code>payload</code></li>
+<li>Then create the <code>signature</code> by Base64 encoding the <code>raw_signature</code></li>
+<li>Then create the “Authorization” header by combining the <code>customerId</code> and the <code>signature</code> seperated by a colon <code>:</code></li>
+</ol>
 <h2 id='headers'>Headers</h2>
 <p>The following header is mandatory for every message exchanged with the REST API :</p>
-<pre class="highlight python tab-python"><code>
-
-<span class="n">Headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">' Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span> 
-          <span class="s">'SMSSupport:Y'</span> <span class="p">,</span>
-          <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46da2-41ff-8bba-f529-930acbffdb4c'</span><span class="p">,</span>
-          <span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span> 
-
+<pre class="highlight plaintext"><code>Content-Type:application/json
+Authorization:12345:XXXXXXXXXXXX=
+MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+MessageTimestamp:yyyyMMddHHmmss
 </code></pre>
 <table><thead>
 <tr>
@@ -373,18 +404,22 @@ Note: the resulting hash value should be encoded in the Base 64 encoding scheme.
 </tr>
 <tr>
 <td>Authorization</td>
-<td>Hash to authentication the requesting system</td>
+<td>The customerId combined with the signature. (See Authentication section)</td>
+</tr>
+<tr>
+<td>MessageID</td>
+<td>A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness</td>
 </tr>
 <tr>
 <td>MessageTimestamp</td>
-<td>Message timestamp</td>
+<td>The timestamp of the payment in UTC timezone with the yyyyMMddHHmmss format</td>
 </tr>
 </tbody></table>
 <h2 id='http-post'>HTTP POST</h2><h3 id='description'>Description</h3>
 <p>This endpoint allows for a payment to be created. </p>
 
 <p>The POST request will be sent to the following URL:
-https://apierp.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments</p>
+https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/<providerId>/customers/<customerId>/payments</p>
 
 <table><thead>
 <tr>
@@ -393,12 +428,12 @@ https://apierp.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<Custo
 </tr>
 </thead><tbody>
 <tr>
-<td>ProviderId</td>
-<td>Uniquely identifies the Mobile Operator that initiated the request</td>
+<td>providerId</td>
+<td>The Mobile Operator provider ID that initiated the request. This is the same for all requests.</td>
 </tr>
 <tr>
-<td>CustomerId</td>
-<td>Uniquely defines a customer in the SP system. Depending on the provider this can be an account number, email address, internal identifier</td>
+<td>customerId</td>
+<td>A unqiue identifier that represents the customer who made the payment. Depending on the provider this can be an account number, email address, internal identifier</td>
 </tr>
 </tbody></table>
 <h3 id='request-payload'>Request Payload</h3>
@@ -408,12 +443,12 @@ curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"
  -H <span class="s2">"Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y="</span> -H <span class="s2">"SMSSupport:Y"</span>
  -H <span class="s2">"MessageID:74e46da-41ff-8bba-f529-930acbffdb4c"</span>, -H <span class="s2">"MessageTimestamp:20161029113022"</span> 
  -X GET -d <span class="s1">'{"transactionId" : "123647","reference" : "bill-0001","operator" : "Mobile_provider","subscriber" : "243858606953","countryCode" : "CD","transaction_type": "PayBill","first_name": "Jhon","account_number":"45678","last_name":  "Doe","amountTargetValue":  78.79,"amountTargetCurrency":  "GBP","exchangeRate":  1.38,"currency" : "USD","amount" : 100.00 }'</span>
-https://apierp.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
+https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
 
 
 </code></pre><pre class="highlight python tab-python"><code>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://apierp.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'</span>
 
 <span class="n">Headers</span> <span class="o">=</span><span class="p">{</span><span class="s">' Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span>
         <span class="s">'SMSSupport:Y'</span> <span class="p">,</span>
@@ -530,18 +565,18 @@ https://apierp.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606
 <p>The GET request will bring you the content of a historical transaction</p>
 
 <p>The GET request will be sent to the following URL:
-https://apierp.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments</p>
+https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments</p>
 <pre class="highlight shell tab-shell"><code>
 curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Content-Type: application/json"</span> 
  -H <span class="s2">"Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y="</span> 
  -H <span class="s2">"SMSSupport:Y"</span>
  -H <span class="s2">"MessageID:74e46da-41ff-8bba-f529-930acbffdb4c"</span>, 
  -H <span class="s2">"MessageTimestamp:20161029113022"</span> 
-https://apierp.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
+https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
 
 </code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span>  <span class="s">'https://apierp.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'</span>
+<span class="n">url</span> <span class="o">=</span>  <span class="s">'https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'</span>
 
 <span class="n">Headers</span><span class="o">=</span><span class="p">{</span><span class="s">' Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span> <span class="s">'SMSSupport:Y'</span> <span class="p">,</span>
           <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46da2-41ff-8bba-f529-930acbffdb4c'</span><span class="p">,</span><span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span> 
@@ -768,14 +803,14 @@ https://apierp.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606
 <p>When you call BBOXX SOAP API, you must authenticate each request by using a set of API credentials. BBOXX associates a set of API credentials with a specific Mobile Money account.</p>
 <pre class="highlight shell tab-shell"><code>
  curl -H <span class="s2">"Content-Type: text/xml"</span> -u MobileProvider:3drvJjs9#324Qfa 
- -X POST -d @Payment.xml -i  https://apierp.bboxx.co.uk/mm/XMLPay
+ -X POST -d @Payment.xml -i  https://payments-test.bboxx.co.uk/mm/XMLPay
 
 
 </code></pre><h2 id='request'>Request</h2><h4 id='description-3'>Description</h4>
 <p>This endpoint allows for a payment to be created. </p>
 
 <p>The POST request will be sent to the following URL:
-https://apierp.bboxx.co.uk/mm/XMLPay</p>
+https://payments-test.bboxx.co.uk/mm/XMLPay</p>
 <h4 id='request-payload-2'>Request Payload</h4>
 <p>Following table provides information of each XMl fields:</p>
 <pre class="highlight xml tab-xml"><code>
