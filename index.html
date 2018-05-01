@@ -1,0 +1,991 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;python&quot;,&quot;java&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="java">java</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#bboxx-rest-api" class="toc-h1 toc-link" data-title="bboxx-rest-api">BBOXX REST API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#introduction" class="toc-h2 toc-link" data-title="introduction">Introduction</a>
+                  </li>
+                  <li>
+                    <a href="#authentication" class="toc-h2 toc-link" data-title="authentication">Authentication</a>
+                  </li>
+                  <li>
+                    <a href="#headers" class="toc-h2 toc-link" data-title="headers">Headers</a>
+                  </li>
+                  <li>
+                    <a href="#http-post" class="toc-h2 toc-link" data-title="http-post">HTTP POST</a>
+                  </li>
+                  <li>
+                    <a href="#http-get" class="toc-h2 toc-link" data-title="http-get">HTTP GET</a>
+                  </li>
+                  <li>
+                    <a href="#errors-code" class="toc-h2 toc-link" data-title="errors-code">Errors code</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#bboxx-soap-api" class="toc-h1 toc-link" data-title="bboxx-soap-api">BBOXX SOAP API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#introduction-2" class="toc-h2 toc-link" data-title="introduction">Introduction</a>
+                  </li>
+                  <li>
+                    <a href="#authentication-2" class="toc-h2 toc-link" data-title="authentication">Authentication</a>
+                  </li>
+                  <li>
+                    <a href="#request" class="toc-h2 toc-link" data-title="request">Request</a>
+                  </li>
+                  <li>
+                    <a href="#errors-code-2" class="toc-h2 toc-link" data-title="errors-code">Errors code</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/lord/slate'>Sign Up for a Developer Key</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='bboxx-rest-api'>BBOXX REST API</h1><h2 id='introduction'>Introduction</h2>
+<p>The  HTTP(S) POST Notification API is designed to help developers integrate third-party applications with BBOXX Mobile Money-system. This guide provides the technical information about integrating and configuring a system by  using RESTful HTTP(S) POST to recieve notification of Mobile Money transaction information. Companies can use this API to allow real-time mobile money transactions to be processed via Pulse. This document describes the HTTP POST parameters and the format of the expected response.
+Synchronous or Near Real-Time Transactions.</p>
+<h2 id='authentication'>Authentication</h2>
+<p>To authenticate the user and ensuring data integrity, a secure Message Authentication Code (HMAC) is used.
+Technically, the HTTP header “Authorization” will be used for this additional security. The header will include both a
+client identifier and the hash value, e.g.:</p>
+<pre class="highlight python tab-python"><code>
+<span class="n">Authorization</span><span class="p">:</span> <span class="n">clientXYZ</span><span class="p">:</span><span class="n">uCMfSzkjue</span><span class="o">+</span><span class="n">HSDygYB5aEg</span><span class="o">==</span>
+
+</code></pre>
+<p>The hash mechanism uses is  HMAC-SHA1. HMAC allows you to both authenticate the
+client and verify the integrity of the request message. 
+ HMAC is used as follows:</p>
+
+<p>The client combines the JSON message , the message ID , path variables and the shared key, applies the HMAC function and retrieves the hash output.</p>
+
+<p>The client adds the “Authorization” header to the request <br>
+The client sends the request <br>
+The server receives the messages and extracts the “Authorization” header <br>
+Based on the client id the server finds the shared secret <br>
+The server accepts the request if the two hash values are matching <br>
+In case the hash values don’t match a HTTP 403 (Forbidden) response should be sent. <br>
+Note: the resulting hash value should be encoded in the Base 64 encoding scheme. <br></p>
+<pre class="highlight python tab-python"><code>
+        <span class="kn">import</span> <span class="nn">hmac</span>
+        <span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha1</span>
+
+        <span class="n">dataencoded</span> <span class="o">=</span> <span class="n">body</span> <span class="o">+</span> <span class="n">MessageId</span> <span class="o">+</span> <span class="n">originId</span> <span class="o">+</span> <span class="n">CustomerId</span>
+        <span class="n">hashed</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">dataencoded</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'UTF-8'</span><span class="p">),</span> <span class="n">sha1</span><span class="p">)</span>
+        <span class="n">responseIntegrity</span> <span class="o">=</span> <span class="n">hashed</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"base64"</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+        <span class="n">header_auth</span> <span class="o">=</span> <span class="n">CustomerId</span><span class="o">+</span><span class="s">':'</span><span class="o">+</span><span class="n">responseIntegrity</span>
+
+</code></pre><pre class="highlight java tab-java"><code>
+<span class="kn">import</span> <span class="nn">javax.crypto.Mac</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.crypto.spec.SecretKeySpec</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.commons.codec.binary.Base64</span><span class="o">;</span> 
+<span class="kn">import</span> <span class="nn">org.apache.commons.io.IOUtils</span><span class="o">;</span> 
+
+<span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"ResponseIntegrity"</span><span class="o">,</span> <span class="n">encodeHmac</span><span class="o">(</span><span class="err">“</span><span class="n">sharedSecret</span><span class="err">”</span><span class="o">,</span>
+                  <span class="n">jsonResponseFromServiceProviderToHub</span><span class="o">));</span>
+<span class="err">…</span>
+
+<span class="kd">protected</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">encodeHmac</span><span class="o">(</span><span class="n">String</span> <span class="n">sharedSecret</span><span class="o">,</span> <span class="n">String</span> <span class="n">message</span><span class="o">){</span>
+ <span class="kt">byte</span><span class="o">[]</span> <span class="n">digest</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+ <span class="k">try</span> <span class="o">{</span>
+     <span class="n">Mac</span> <span class="n">mac</span> <span class="o">=</span> <span class="n">Mac</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"HmacSHA1"</span><span class="o">);</span>
+     <span class="n">SecretKeySpec</span> <span class="n">secret</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SecretKeySpec</span><span class="o">(</span><span class="n">sharedSecret</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">)),</span>
+    <span class="s">"HmacSHA1"</span><span class="o">);</span>
+     <span class="n">mac</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="n">secret</span><span class="o">);</span>
+     <span class="n">digest</span> <span class="o">=</span> <span class="n">mac</span><span class="o">.</span><span class="na">doFinal</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">)));</span>
+     <span class="o">}</span> <span class="k">catch</span><span class="o">(</span> <span class="n">NoSuchAlgorithmException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Response: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+ <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvalidKeyException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Response: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+ <span class="o">}</span>
+    <span class="k">return</span> <span class="n">Base64</span><span class="o">.</span><span class="na">encodeBase64String</span><span class="o">(</span><span class="n">digest</span><span class="o">);</span>
+ <span class="o">}</span>
+
+</code></pre>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body content of the Request</td>
+</tr>
+<tr>
+<td>MessageId</td>
+<td>The value of the identifier is of the following format GUID, where each digit is a hexadecimal value.</td>
+</tr>
+<tr>
+<td>originId</td>
+<td>Unique identifier of the Mobile Money Provider</td>
+</tr>
+<tr>
+<td>CustomerId</td>
+<td>Unique identifier of the customer</td>
+</tr>
+</tbody></table>
+<h2 id='headers'>Headers</h2>
+<p>The following header is mandatory for every message exchanged with the REST API :</p>
+<pre class="highlight python tab-python"><code>
+
+<span class="n">Headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">' Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span> 
+          <span class="s">'SMSSupport:Y'</span> <span class="p">,</span>
+          <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46da2-41ff-8bba-f529-930acbffdb4c'</span><span class="p">,</span>
+          <span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span> 
+
+</code></pre>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Content-Type</td>
+<td>If a request payload is sent, it should always be a JSON string</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>Hash to authentication the requesting system</td>
+</tr>
+<tr>
+<td>MessageTimestamp</td>
+<td>Message timestamp</td>
+</tr>
+</tbody></table>
+<h2 id='http-post'>HTTP POST</h2><h3 id='description'>Description</h3>
+<p>This endpoint allows for a payment to be created. </p>
+
+<p>The POST request will be sent to the following URL:
+https://apierp.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ProviderId</td>
+<td>Uniquely identifies the Mobile Operator that initiated the request</td>
+</tr>
+<tr>
+<td>CustomerId</td>
+<td>Uniquely defines a customer in the SP system. Depending on the provider this can be an account number, email address, internal identifier</td>
+</tr>
+</tbody></table>
+<h3 id='request-payload'>Request Payload</h3>
+<p>Following table provides information of each JSON field of the HTTP request body:</p>
+<pre class="highlight shell tab-shell"><code>
+curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Content-Type: application/json"</span> 
+ -H <span class="s2">"Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y="</span> -H <span class="s2">"SMSSupport:Y"</span>
+ -H <span class="s2">"MessageID:74e46da-41ff-8bba-f529-930acbffdb4c"</span>, -H <span class="s2">"MessageTimestamp:20161029113022"</span> 
+ -X GET -d <span class="s1">'{"transactionId" : "123647","reference" : "bill-0001","operator" : "Mobile_provider","subscriber" : "243858606953","countryCode" : "CD","transaction_type": "PayBill","first_name": "Jhon","account_number":"45678","last_name":  "Doe","amountTargetValue":  78.79,"amountTargetCurrency":  "GBP","exchangeRate":  1.38,"currency" : "USD","amount" : 100.00 }'</span>
+https://apierp.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
+
+
+</code></pre><pre class="highlight python tab-python"><code>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://apierp.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'</span>
+
+<span class="n">Headers</span> <span class="o">=</span><span class="p">{</span><span class="s">' Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span>
+        <span class="s">'SMSSupport:Y'</span> <span class="p">,</span>
+        <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46da2-41ff-8bba-f529-930acbffdb4c'</span><span class="p">,</span>
+        <span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span> 
+
+<span class="n">body</span> <span class="o">=</span> <span class="s">'{"transactionId" : "123647",</span><span class="err">
+</span><span class="s">        "reference" : "4526",</span><span class="err">
+</span><span class="s">        "operator" : "Mobile_provider", </span><span class="err">
+</span><span class="s">        "subscriber" : "250786474859", </span><span class="err">
+</span><span class="s">        "countryCode" : "RW", </span><span class="err">
+</span><span class="s">        "currency" : "RWF", </span><span class="err">
+</span><span class="s">        "transaction_type": "PayBill"</span><span class="err">
+</span><span class="s">        "first_name": "Jhon",</span><span class="err">
+</span><span class="s">        "account_number":"45678",</span><span class="err">
+</span><span class="s">        "last_name": "Doe",</span><span class="err">
+</span><span class="s">        "amount" : 200.0 }'</span> 
+
+<span class="n">post</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span> <span class="n">header</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span> <span class="n">body</span><span class="p">)</span>
+
+</code></pre>
+<table><thead>
+<tr>
+<th>Fields</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>transactionId <br><font color="DarkGray"><em>string</em></font></td>
+<td>Unique identifier of the payment as generated by the MMO</td>
+</tr>
+<tr>
+<td>operator<br><font color="DarkGray"><em>string</em></font></td>
+<td>Unique identifier of the MMO</td>
+</tr>
+<tr>
+<td>subscriber <br><font color="DarkGray"><em>string</em></font></td>
+<td>Unique identifier of the end customer in the MMO’s system. This is usually the MSISDN</td>
+</tr>
+<tr>
+<td>reference <br><font color="DarkGray"><em>string</em></font></td>
+<td>The reference number as assigned to the transaction by the mobile money provider</td>
+</tr>
+<tr>
+<td>internal_transaction_id<br><font color="DarkGray"><em>string</em></font></td>
+<td>The internal ID of the transaction within the System.</td>
+</tr>
+<tr>
+<td>transaction_type <br><font color="DarkGray"><em>string</em></font></td>
+<td>The type of the transaction eg. Paybill, Buygoods etc,</td>
+</tr>
+<tr>
+<td>account_number <br><font color="DarkGray"><em>string</em></font></td>
+<td>The account number as entered by the subscriber. (optional – only for Paybill payments)</td>
+</tr>
+<tr>
+<td>first_name <br><font color="DarkGray"><em>string</em></font></td>
+<td>The first name of the subscriber</td>
+</tr>
+<tr>
+<td>last_name <br><font color="DarkGray"><em>string</em></font></td>
+<td>The last name of the subscriber</td>
+</tr>
+<tr>
+<td>amount <br><font color="DarkGray"><em>int</em></font></td>
+<td>Contains the amount to be paid in local currency</td>
+</tr>
+<tr>
+<td>amountTargetValue <br><font color="DarkGray"><em>int</em></font></td>
+<td>Contains the amount to be paid in target currency</td>
+</tr>
+<tr>
+<td>amountTargetCurrency <br><font color="DarkGray"><em>int</em></font></td>
+<td>Contains the target currency reference</td>
+</tr>
+<tr>
+<td>exchangeRate <br><font color="DarkGray"><em>int</em></font></td>
+<td>Exchange rate between both currencies (if applicable)</td>
+</tr>
+<tr>
+<td>currency <br><font color="DarkGray"><em>string</em></font></td>
+<td>Currency in use</td>
+</tr>
+</tbody></table>
+<h3 id='response-payload'>Response Payload</h3>
+<p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: </p>
+<pre class="highlight python tab-python"><code>
+ <span class="p">{</span><span class="s">"providerTransactionId"</span><span class="p">:</span><span class="s">"0123456"</span><span class="p">,</span>
+      <span class="s">"status"</span><span class="p">:</span> <span class="s">"ACCEPTED"</span><span class="p">,</span>
+      <span class="s">"Description"</span><span class="p">:</span> <span class="s">"Dear Customer the payment was accepted."</span><span class="p">}</span>
+
+
+</code></pre>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ProviderTransactionId</td>
+<td>The  provider’s reference ID of the payment</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>The status of the payment:</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Tne description message</td>
+</tr>
+</tbody></table>
+<h2 id='http-get'>HTTP GET</h2><h3 id='description-2'>Description</h3>
+<p>The GET request will bring you the content of a historical transaction</p>
+
+<p>The GET request will be sent to the following URL:
+https://apierp.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments</p>
+<pre class="highlight shell tab-shell"><code>
+curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Content-Type: application/json"</span> 
+ -H <span class="s2">"Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y="</span> 
+ -H <span class="s2">"SMSSupport:Y"</span>
+ -H <span class="s2">"MessageID:74e46da-41ff-8bba-f529-930acbffdb4c"</span>, 
+ -H <span class="s2">"MessageTimestamp:20161029113022"</span> 
+https://apierp.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
+
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span>  <span class="s">'https://apierp.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'</span>
+
+<span class="n">Headers</span><span class="o">=</span><span class="p">{</span><span class="s">' Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span> <span class="s">'SMSSupport:Y'</span> <span class="p">,</span>
+          <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46da2-41ff-8bba-f529-930acbffdb4c'</span><span class="p">,</span><span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span> 
+
+<span class="n">post</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
+</code></pre>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ProviderId</td>
+<td>If a request payload is sent, it should always be a JSON string</td>
+</tr>
+<tr>
+<td>CustomerId</td>
+<td>Hash to authentication the requesting system</td>
+</tr>
+</tbody></table>
+<h3 id='response-payload-2'>Response Payload</h3>
+<p>Upon the successful processing of the GET request, a JSON encoded response will be return in the following format:</p>
+<pre class="highlight shell tab-shell"><code>
+ <span class="s1">'{"transactionId" : "123647",
+        "reference" : "4526",
+        "operator" : "Mobile_provider", 
+        "subscriber" : "250786474859", 
+        "countryCode" : "RW", 
+        "currency" : "RWF", 
+        "transaction_type": "PayBill"
+        "first_name": "Jhon",
+        "account_number": "45678",
+        "last_name": "Doe",
+        "amount" : 200.0 }'</span> 
+
+</code></pre><pre class="highlight python tab-python"><code>
+ <span class="s">'{"transactionId" : "123647",</span><span class="err">
+</span><span class="s">        "reference" : "4526",</span><span class="err">
+</span><span class="s">        "operator" : "Mobile_provider", </span><span class="err">
+</span><span class="s">        "subscriber" : "250786474859", </span><span class="err">
+</span><span class="s">        "countryCode" : "RW", </span><span class="err">
+</span><span class="s">        "currency" : "RWF", </span><span class="err">
+</span><span class="s">        "transaction_type": "PayBill"</span><span class="err">
+</span><span class="s">        "first_name": "Jhon",</span><span class="err">
+</span><span class="s">        "account_number": "45678",</span><span class="err">
+</span><span class="s">        "last_name": "Doe",</span><span class="err">
+</span><span class="s">        "amount" : 200.0 }'</span> 
+
+
+</code></pre>
+<table><thead>
+<tr>
+<th>Fields</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>transactionId <br><font color="DarkGray"><em>string</em></font></td>
+<td>Unique identifier of the payment as generated by the MMO</td>
+</tr>
+<tr>
+<td>operator<br><font color="DarkGray"><em>string</em></font></td>
+<td>Unique identifier of the MMO</td>
+</tr>
+<tr>
+<td>subscriber <br><font color="DarkGray"><em>string</em></font></td>
+<td>Unique identifier of the end customer in the MMO’s system. This is usually the MSISDN</td>
+</tr>
+<tr>
+<td>reference <br><font color="DarkGray"><em>string</em></font></td>
+<td>The reference number as assigned to the transaction by the mobile money provider</td>
+</tr>
+<tr>
+<td>internal_transaction_id<br><font color="DarkGray"><em>string</em></font></td>
+<td>The internal ID of the transaction within the System.</td>
+</tr>
+<tr>
+<td>transaction_type <br><font color="DarkGray"><em>string</em></font></td>
+<td>The type of the transaction eg. Paybill, Buygoods etc,</td>
+</tr>
+<tr>
+<td>account_number <br><font color="DarkGray"><em>string</em></font></td>
+<td>The account number as entered by the subscriber. (optional – only for Paybill payments)</td>
+</tr>
+<tr>
+<td>first_name <br><font color="DarkGray"><em>string</em></font></td>
+<td>The first name of the subscriber</td>
+</tr>
+<tr>
+<td>last_name <br><font color="DarkGray"><em>string</em></font></td>
+<td>The last name of the subscriber</td>
+</tr>
+<tr>
+<td>amount <br><font color="DarkGray"><em>int</em></font></td>
+<td>The amount to be paid in local currency</td>
+</tr>
+<tr>
+<td>amountTargetValue <br><font color="DarkGray"><em>int</em></font></td>
+<td>Contains the amount to be paid in target currency</td>
+</tr>
+<tr>
+<td>amountTargetCurrency <br><font color="DarkGray"><em>int</em></font></td>
+<td>Contains the target currency reference</td>
+</tr>
+<tr>
+<td>exchangeRate <br><font color="DarkGray"><em>int</em></font></td>
+<td>Exchange rate between both currencies (if applicable)</td>
+</tr>
+<tr>
+<td>currency <br><font color="DarkGray"><em>string</em></font></td>
+<td>The local currency reference</td>
+</tr>
+<tr>
+<td>status <br><font color="DarkGray"><em>string</em></font></td>
+<td>3 possible status of the request : Accepted</td>
+</tr>
+</tbody></table>
+<h3 id='response-payload-3'>Response Payload</h3>
+<p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: </p>
+<pre class="highlight shell tab-shell"><code>
+ <span class="o">{</span><span class="s2">"providerTransactionId"</span>:<span class="s2">"0123456"</span>,
+        <span class="s2">"status"</span>: <span class="s2">"ACCEPTED"</span>,
+        <span class="s2">"Description"</span>: <span class="s2">"Dear Customer the payment was accepted."</span><span class="o">}</span>
+
+
+</code></pre><pre class="highlight python tab-python"><code>
+ <span class="p">{</span><span class="s">"providerTransactionId"</span><span class="p">:</span><span class="s">"0123456"</span><span class="p">,</span>
+        <span class="s">"status"</span><span class="p">:</span> <span class="s">"ACCEPTED"</span><span class="p">,</span>
+        <span class="s">"Description"</span><span class="p">:</span> <span class="s">"Dear Customer the payment was accepted."</span><span class="p">}</span>
+
+
+</code></pre>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ProviderTransactionId</td>
+<td>The  provider’s reference ID of the payment</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>The status of the payment:</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Tne description message</td>
+</tr>
+</tbody></table>
+<h2 id='errors-code'>Errors code</h2>
+<p>The Bboxx Mobile Money API uses the following error codes:</p>
+
+<table><thead>
+<tr>
+<th>Code Error</th>
+<th>description</th>
+<th>Exemple</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>4000</td>
+<td>Provider information wrong</td>
+<td>your application is not register in the system please check your account.</td>
+</tr>
+<tr>
+<td>4001</td>
+<td>Customer not found</td>
+<td>The provided CustomerID was not found in the system.</td>
+</tr>
+<tr>
+<td>4002</td>
+<td>The description message</td>
+<td>Transaction cannot be completed as multiple customers have been found for the provided customerID.</td>
+</tr>
+<tr>
+<td>4003</td>
+<td>Invalid amount</td>
+<td>Unable to validate this transaction as the amount specified is not valid e.g: zero negative or invalid format amount.</td>
+</tr>
+<tr>
+<td>4004</td>
+<td>Forbidden operation</td>
+<td>The customer identified by the customerId is not allowed to perform this operation.</td>
+</tr>
+<tr>
+<td>4005</td>
+<td>Invalid Reference</td>
+<td>The reference provided in the message is invalid. i.e: The reference is unknown.</td>
+</tr>
+<tr>
+<td>4006</td>
+<td>Provider information wrong</td>
+<td>The provided currency is not valid.</td>
+</tr>
+<tr>
+<td>4007</td>
+<td>Operation not succeed</td>
+<td>Invalid message format.</td>
+</tr>
+<tr>
+<td>4008</td>
+<td>Field value length too large</td>
+<td>Field value exceeded the maximum length allowed.</td>
+</tr>
+<tr>
+<td>4009</td>
+<td>Transaction ID not found</td>
+<td>The transaction ID provided was not found.</td>
+</tr>
+<tr>
+<td>40010</td>
+<td>Duplicate Transaction ID</td>
+<td>The Customer for provided customerID was not found in system.</td>
+</tr>
+</tbody></table>
+<h1 id='bboxx-soap-api'>BBOXX SOAP API</h1><h2 id='introduction-2'>Introduction</h2>
+<p>The BBOXX SOAP API is based on open standards known collectively as web services, which include the Simple Object Access Protocol (SOAP), Web Services Definition Language (WSDL), and the XML Schema Definition language (XSD). A wide range of development tools on a variety of platforms support web services.</p>
+
+<p>Like many web services, BBOXX SOAP API is a combination of client-side and server-side schemas.</p>
+<h2 id='authentication-2'>Authentication</h2>
+<p>When you call BBOXX SOAP API, you must authenticate each request by using a set of API credentials. BBOXX associates a set of API credentials with a specific Mobile Money account.</p>
+<pre class="highlight shell tab-shell"><code>
+ curl -H <span class="s2">"Content-Type: text/xml"</span> -u MobileProvider:3drvJjs9#324Qfa 
+ -X POST -d @Payment.xml -i  https://apierp.bboxx.co.uk/mm/XMLPay
+
+
+</code></pre><h2 id='request'>Request</h2><h4 id='description-3'>Description</h4>
+<p>This endpoint allows for a payment to be created. </p>
+
+<p>The POST request will be sent to the following URL:
+https://apierp.bboxx.co.uk/mm/XMLPay</p>
+<h4 id='request-payload-2'>Request Payload</h4>
+<p>Following table provides information of each XMl fields:</p>
+<pre class="highlight xml tab-xml"><code>
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;SOAP-ENV:Envelope</span> <span class="na">xmlns:SOAP-ENV=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;SOAP-ENV:header&gt;</span>
+<span class="nt">&lt;/SOAP-ENV:header&gt;</span>
+    <span class="nt">&lt;SOAP-ENV:Body&gt;</span>
+        <span class="nt">&lt;ns1</span> <span class="err">paymentDone</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;countryCode&gt;</span>TG<span class="nt">&lt;/countryCode&gt;</span>
+        <span class="nt">&lt;transactionId&gt;</span>123647<span class="nt">&lt;/transactionId&gt;</span> 
+        <span class="nt">&lt;reference&gt;</span>4526<span class="nt">&lt;/reference&gt;</span>
+        <span class="nt">&lt;operator&gt;</span>BBOXX Telecom<span class="nt">&lt;/operator&gt;</span>
+        <span class="nt">&lt;subscriber&gt;</span>250786474859<span class="nt">&lt;/subscriber&gt;</span>
+        <span class="nt">&lt;transaction_type&gt;</span>PayBill<span class="nt">&lt;/transaction_type&gt;</span>
+        <span class="nt">&lt;first_name&gt;</span>Jhon<span class="nt">&lt;/first_name&gt;</span> 
+        <span class="nt">&lt;account_number&gt;</span>45678<span class="nt">&lt;/account_number&gt;</span> 
+        <span class="nt">&lt;last_name&gt;</span>Doe<span class="nt">&lt;/last_name&gt;</span> 
+        <span class="nt">&lt;amount&gt;</span>10000.00<span class="nt">&lt;/amount&gt;</span> 
+        <span class="nt">&lt;currency&gt;</span>CFA <span class="nt">&lt;/currency&gt;</span>
+        <span class="nt">&lt;amountTargetValue&gt;</span>18.60 <span class="nt">&lt;/amountTargetValue&gt;</span>
+        <span class="nt">&lt;amountTargetCurrency&gt;</span>USD<span class="nt">&lt;/amountTargetCurrency&gt;</span>
+        <span class="nt">&lt;exchangeRate&gt;</span>0.0019<span class="nt">&lt;/exchangeRate&gt;</span>
+        <span class="nt">&lt;freeField&gt;</span>JOE<span class="nt">&lt;/freeField&gt;</span>
+        <span class="err">&lt;</span>/ns1 paymentDone&gt;
+    <span class="nt">&lt;/SOAP-ENV:Body&gt;</span>
+<span class="nt">&lt;/SOAP-ENV:Envelope&gt;</span>
+
+
+<span class="nt">&lt;/xml&gt;</span>
+
+</code></pre>
+<table><thead>
+<tr>
+<th>Fields</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>transactionId <br><font color="DarkGray"></font></td>
+<td>Unique identifier of the payment as generated by the MMO</td>
+</tr>
+<tr>
+<td>operator<br><font color="DarkGray"></font></td>
+<td>Unique identifier of the MMO</td>
+</tr>
+<tr>
+<td>subscriber <br><font color="DarkGray"></font></td>
+<td>Unique identifier of the end customer in the MMO’s system. This is usually the MSISDN</td>
+</tr>
+<tr>
+<td>reference <br><font color="DarkGray"></font></td>
+<td>The reference number as assigned to the transaction by the mobile money provider</td>
+</tr>
+<tr>
+<td>internal_transaction_id<br><font color="DarkGray"></font></td>
+<td>The internal ID of the transaction within the System.</td>
+</tr>
+<tr>
+<td>transaction_type <br><font color="DarkGray"></font></td>
+<td>The type of the transaction eg. Paybill, Buygoods etc,</td>
+</tr>
+<tr>
+<td>account_number <br><font color="DarkGray"></font></td>
+<td>The account number as entered by the subscriber. (optional – only for Paybill payments)</td>
+</tr>
+<tr>
+<td>first_name <br><font color="DarkGray"></font></td>
+<td>The first name of the subscriber</td>
+</tr>
+<tr>
+<td>last_name <br><font color="DarkGray"></font></td>
+<td>The last name of the subscriber</td>
+</tr>
+<tr>
+<td>amount <br><font color="DarkGray"></font></td>
+<td>The amount to be paid in local currency</td>
+</tr>
+<tr>
+<td>amountTargetValue <br><font color="DarkGray"></font></td>
+<td>Contains the amount to be paid in target currency</td>
+</tr>
+<tr>
+<td>amountTargetCurrency <br><font color="DarkGray"></font></td>
+<td>Contains the target currency reference</td>
+</tr>
+<tr>
+<td>exchangeRate <br><font color="DarkGray"></font></td>
+<td>Exchange rate between both currencies (if applicable)</td>
+</tr>
+<tr>
+<td>currency <br><font color="DarkGray"></font></td>
+<td>The local currency reference</td>
+</tr>
+<tr>
+<td>status <br><font color="DarkGray"></font></td>
+<td>Status of the request : Accepted</td>
+</tr>
+</tbody></table>
+<h3 id='response-payload-4'>Response Payload</h3>
+<p>Upon the successful processing of the POST request, a XML response will be return : </p>
+<pre class="highlight xml tab-xml"><code>
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+  <span class="nt">&lt;SOAP-ENV:Envelope</span> <span class="na">xmlns:SOAP-ENV=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;SOAP-ENV:Body&gt;</span>
+      <span class="nt">&lt;ns1:paymentDoneResponse&gt;</span>
+      <span class="nt">&lt;date&gt;</span> 2017-02-28 16:30:46.023428<span class="nt">&lt;/date&gt;</span>
+      <span class="nt">&lt;code&gt;</span>200<span class="nt">&lt;/code&gt;</span>
+      <span class="nt">&lt;description&gt;</span>  Success <span class="nt">&lt;/description&gt;</span>
+      <span class="nt">&lt;/ns1:paymentDoneResponse&gt;</span>
+    <span class="nt">&lt;/SOAP-ENV:Body&gt;</span>
+  <span class="nt">&lt;/SOAP-ENV:Envelope&gt;</span>
+
+<span class="nt">&lt;/xml&gt;</span>
+
+</code></pre>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>date</td>
+<td>The transaction timestamp</td>
+</tr>
+<tr>
+<td>code</td>
+<td>The payment status code</td>
+</tr>
+<tr>
+<td>description</td>
+<td>The description message</td>
+</tr>
+</tbody></table>
+<h2 id='errors-code-2'>Errors code</h2>
+<p>The Bboxx Mobile Money API uses the following error codes:</p>
+
+<table><thead>
+<tr>
+<th>Code Error</th>
+<th>description</th>
+<th>Exemple</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>4000</td>
+<td>Provider information wrong</td>
+<td>your application is not register in the system please check your account.</td>
+</tr>
+<tr>
+<td>4001</td>
+<td>Customer not found</td>
+<td>The provided CustomerID was not found in the system.</td>
+</tr>
+<tr>
+<td>4002</td>
+<td>The description message</td>
+<td>Transaction cannot be completed as multiple customers have been found for the provided customerID.</td>
+</tr>
+<tr>
+<td>4003</td>
+<td>Invalid amount</td>
+<td>Unable to validate this transaction as the amount specified is not valid e.g: zero negative or invalid format amount.</td>
+</tr>
+<tr>
+<td>4004</td>
+<td>Forbidden operation</td>
+<td>The customer identified by the customerId is not allowed to perform this operation.</td>
+</tr>
+<tr>
+<td>4005</td>
+<td>Invalid Reference</td>
+<td>The reference provided in the message is invalid. i.e: The reference is unknown.</td>
+</tr>
+<tr>
+<td>4006</td>
+<td>Provider information wrong</td>
+<td>The provided currency is not valid.</td>
+</tr>
+<tr>
+<td>4007</td>
+<td>Operation not succeed</td>
+<td>Invalid message format.</td>
+</tr>
+<tr>
+<td>4008</td>
+<td>Field value length too large</td>
+<td>Field value exceeded the maximum length allowed.</td>
+</tr>
+<tr>
+<td>4009</td>
+<td>Transaction ID not found</td>
+<td>The transaction ID provided was not found.</td>
+</tr>
+<tr>
+<td>40010</td>
+<td>Duplicate Transaction ID</td>
+<td>The Customer for provided customerID was not found in system.</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="java">java</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
