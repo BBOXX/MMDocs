@@ -26,112 +26,142 @@ Synchronous or Near Real-Time Transactions.
 
 ## Authentication
 
-
-
- To authenticate the user and ensuring data integrity, a secure Message Authentication Code (HMAC) is used.
-Technically, the HTTP header “Authorization” will be used for this additional security. The header will include both a
-client identifier and the hash value, e.g.:
-
-
 ```python
+# How to Generate the “Authorization” header in Python
 
-Authorization: clientXYZ:uCMfSzkjue+HSDygYB5aEg==
+import hmac
+from hashlib import sha1
 
-```
+def generate_signature(shared_secret, payload):
+    raw_signature = hmac.new(shared_secret, payload.encode('UTF-8'), sha1)
+    signature = raw_signature.digest().encode("base64").rstrip('\n')
+    return signature
 
-The hash mechanism uses is  HMAC-SHA1. HMAC allows you to both authenticate the
-client and verify the integrity of the request message. 
- HMAC is used as follows:
+# Example Request Data
+customerId  = "123";
+body        = "{\"name\":\"Bob\",\"amount\":32}"
+messageId   = "a2536ff7-886a-432d-a5ae-45ed9d12b016"
+providerId  = "12345"
 
+# Payload must be contructed in this order
+payload = body + messageId + providerId + customerId
+payload = "test"
+# Generate Signature
+signature = generate_signature("supersecretkey",payload)
+# Construct Authorization Header
+authHeader = "Authorization: " + customerId + ":" + signature;
 
-The client combines the JSON message , the message ID , path variables and the shared key, applies the HMAC function and retrieves the hash output.
-
-
-The client adds the “Authorization” header to the request <br>
-The client sends the request <br>
-The server receives the messages and extracts the “Authorization” header <br>
-Based on the client id the server finds the shared secret <br>
-The server accepts the request if the two hash values are matching <br>
-In case the hash values don’t match a HTTP 403 (Forbidden) response should be sent. <br>
-Note: the resulting hash value should be encoded in the Base 64 encoding scheme. <br>
-
-
-
-
-```python
-
-        import hmac
-        from hashlib import sha1
-
-        dataencoded = body + MessageId + originId + CustomerId
-        hashed = hmac.new(signature, dataencoded.encode('UTF-8'), sha1)
-        responseIntegrity = hashed.digest().encode("base64").rstrip('\n')
-        header_auth = CustomerId+':'+responseIntegrity
+print(authHeader)
 
 ```
 
 ```java
+// How to Generate the “Authorization” header in Java
 
+import java.nio.charset.Charset;
+import java.security.NoSuchAlgorithmException;
+import java.security.InvalidKeyException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64; 
-import org.apache.commons.io.IOUtils; 
+import org.apache.commons.io.IOUtils;
 
-response.setHeader("ResponseIntegrity", encodeHmac(“sharedSecret”,
-                  jsonResponseFromServiceProviderToHub));
-…
+public class HelloWorld{
+    
+    protected static String generateSignature(String sharedSecret, String payload){
+        byte[] raw_signature = null;
+        try {
+            Mac mac = Mac.getInstance("HmacSHA1");
+            SecretKeySpec secret = new SecretKeySpec(sharedSecret.getBytes(Charset.forName("UTF-8")),
+            "HmacSHA1");
+            mac.init(secret);
+            raw_signature = mac.doFinal(payload.getBytes(Charset.forName("UTF-8")));
+        } catch( NoSuchAlgorithmException e) {
+            System.out.print("Response: " + e.getMessage());
+        } catch (InvalidKeyException e) {
+            System.out.print("Response: " + e.getMessage());
+        }
+    return Base64.encodeBase64String(raw_signature);
+    }
 
-protected static String encodeHmac(String sharedSecret, String message){
- byte[] digest = null;
- try {
-     Mac mac = Mac.getInstance("HmacSHA1");
-     SecretKeySpec secret = new SecretKeySpec(sharedSecret.getBytes(Charset.forName("UTF-8")),
-    "HmacSHA1");
-     mac.init(secret);
-     digest = mac.doFinal(message.getBytes(Charset.forName("UTF-8")));
-     } catch( NoSuchAlgorithmException e) {
-        System.out.println("Response: " + e.getMessage());
- } catch (InvalidKeyException e) {
-    System.out.println("Response: " + e.getMessage());
- }
-    return Base64.encodeBase64String(digest);
- }
+    public static void main(String[] args){
+        String payload = "";
+
+        // Example Request Data
+        String body = "{\"name\":\"Bob\",\"amount\":32}";
+        String messageId = "a2536ff7-886a-432d-a5ae-45ed9d12b016";
+        String providerId = "12345";
+        String customerId = "123";
+        
+        // Payload must be contructed in this order
+        payload = body + messageId + providerId + customerId;
+        
+        String signature = generateSignature("supersecretkey",payload);
+        
+        String authHeader = "Authorization: " + customerId + ":" + signature;
+        System.out.print(authHeader);
+    }
+}
 
 ```
 
-Name | description 
----------- | ------- 
-body | body content of the Request
-MessageId | The value of the identifier is of the following format GUID, where each digit is a hexadecimal value.
-originId | Unique identifier of the Mobile Money Provider
-CustomerId |Unique identifier of the customer  
+```shell
+#  How to Generate the “Authorization” header in BASH
 
+body="{\"name\":\"Bob\",\"amount\":32}"
+messageId="a2536ff7-886a-432d-a5ae-45ed9d12b016"
+providerId="12345"
+customerId="123"
 
+function generate_signature {
+  sharedSecret="$1"
+  payload="$2"
+  echo -n "$payload" | openssl dgst -binary -sha1 -hmac "$sharedSecret" | openssl base64
+}
 
+signature=`generate_signature supersecretkey $body$messageId$providerId$customerId`
+authHeader="Authorization: $customerId:$signature"
+echo $authHeader
+```
 
+Authentication is achieved by signing every HTTP request made to BBOXX.
 
+The HTTP header “Authorization” is be used to transport the signature this security. The “Authorization” header consists of a `customerId` and the `signature` seperated by a colon `:` example: `Authorization: <customerId>:<signature>`
+
+The `customerId` is a unqiue identifier that represents the customer who made the payment.
+
+The `signature` is generated using the HMAC-SHA1 hashing mechanism.
+
+Steps to create the `Authorization` header:
+
+1. First, combine the following 4 fields into one large `payload` (*NOTE* The order is important): 
+    - The Request body 
+    - The `messageID` field
+    - The `providerId` field
+    - The `customerId` field
+2. Then make sure the `payload` is in "UTF-8" format.
+3. Then create the `raw_signature` by applying the HMAC SHA1 algorithm to the `payload`
+4. Then create the `signature` by Base64 encoding the `raw_signature`
+5. Then create the “Authorization” header by combining the `customerId` and the `signature` seperated by a colon `:`
 
 ## Headers
 
 The following header is mandatory for every message exchanged with the REST API :
 
 
-```python
-
-
-Headers = {' Authorization':'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8=', 
-          'SMSSupport:Y' ,
-          'MessageID':'74e46da2-41ff-8bba-f529-930acbffdb4c',
-          'MessageTimestamp':'20161029113022'} 
-
+```
+Content-Type:application/json
+Authorization:12345:XXXXXXXXXXXX=
+MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+MessageTimestamp:yyyyMMddHHmmss
 ```
 
 Name | description 
 ---------- | ------- 
 Content-Type | If a request payload is sent, it should always be a JSON string 
-Authorization | Hash to authentication the requesting system 
-MessageTimestamp |Message timestamp  
-
+Authorization | The customerId combined with the signature. (See Authentication section)
+MessageID | A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness
+MessageTimestamp | The timestamp of the payment in UTC timezone with the yyyyMMddHHmmss format
 
 
 ## HTTP POST
@@ -142,15 +172,13 @@ This endpoint allows for a payment to be created.
 
 
 The POST request will be sent to the following URL:
-https://apierp.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments
+https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/<providerId>/customers/<customerId>/payments
 
 
 Name | description 
 ---------- | ------- 
-ProviderId |  Uniquely identifies the Mobile Operator that initiated the request
-CustomerId |  Uniquely defines a customer in the SP system. Depending on the provider this can be an account number, email address, internal identifier
-
-
+providerId |  The Mobile Operator provider ID that initiated the request. This is the same for all requests. 
+customerId |  A unqiue identifier that represents the customer who made the payment. Depending on the provider this can be an account number, email address, internal identifier
 
 
 
@@ -163,7 +191,7 @@ curl -H "Accept: application/json" -H "Content-Type: application/json"
  -H "Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y=" -H "SMSSupport:Y"
  -H "MessageID:74e46da-41ff-8bba-f529-930acbffdb4c", -H "MessageTimestamp:20161029113022" 
  -X GET -d '{"transactionId" : "123647","reference" : "bill-0001","operator" : "Mobile_provider","subscriber" : "243858606953","countryCode" : "CD","transaction_type": "PayBill","first_name": "Jhon","account_number":"45678","last_name":  "Doe","amountTargetValue":  78.79,"amountTargetCurrency":  "GBP","exchangeRate":  1.38,"currency" : "USD","amount" : 100.00 }'
-https://apierp.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
+https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
 
 
 ```
@@ -171,7 +199,7 @@ https://apierp.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606
 ```python
 
 
-url = 'https://apierp.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'
+url = 'https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'
 
 Headers ={' Authorization':'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8=',
         'SMSSupport:Y' ,
@@ -246,7 +274,7 @@ The GET request will bring you the content of a historical transaction
 
 
 The GET request will be sent to the following URL:
-https://apierp.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments
+https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments
 
 
 ```shell
@@ -256,7 +284,7 @@ curl -H "Accept: application/json" -H "Content-Type: application/json"
  -H "SMSSupport:Y"
  -H "MessageID:74e46da-41ff-8bba-f529-930acbffdb4c", 
  -H "MessageTimestamp:20161029113022" 
-https://apierp.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
+https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
     
 ```
 
@@ -264,7 +292,7 @@ https://apierp.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606
 ```python
 import requests
 
-url =  'https://apierp.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'
+url =  'https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'
 
 Headers={' Authorization':'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8=', 'SMSSupport:Y' ,
           'MessageID':'74e46da2-41ff-8bba-f529-930acbffdb4c','MessageTimestamp':'20161029113022'} 
@@ -432,7 +460,7 @@ When you call BBOXX SOAP API, you must authenticate each request by using a set 
 ```shell
 
  curl -H "Content-Type: text/xml" -u MobileProvider:3drvJjs9#324Qfa 
- -X POST -d @Payment.xml -i  https://apierp.bboxx.co.uk/mm/XMLPay
+ -X POST -d @Payment.xml -i  https://payments-test.bboxx.co.uk/mm/XMLPay
 
     
 ```  
@@ -446,7 +474,7 @@ This endpoint allows for a payment to be created.
 
 
 The POST request will be sent to the following URL:
-https://apierp.bboxx.co.uk/mm/XMLPay
+https://payments-test.bboxx.co.uk/mm/XMLPay
 
 
 
