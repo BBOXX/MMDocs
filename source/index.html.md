@@ -47,7 +47,7 @@ providerId  = "12345"
 payload = body + messageId + providerId + customerId
 payload = "test"
 # Generate Signature
-signature = generate_signature("supersecretkey",payload)
+signature = generate_signature("supersecurekey",payload)
 # Construct Authorization Header
 authHeader = "Authorization: " + customerId + ":" + signature;
 
@@ -96,7 +96,7 @@ public class HelloWorld{
         // Payload must be contructed in this order
         payload = body + messageId + providerId + customerId;
         
-        String signature = generateSignature("supersecretkey",payload);
+        String signature = generateSignature("supersecurekey",payload);
         
         String authHeader = "Authorization: " + customerId + ":" + signature;
         System.out.print(authHeader);
@@ -119,7 +119,7 @@ function generate_signature {
   echo -n "$payload" | openssl dgst -binary -sha1 -hmac "$sharedSecret" | openssl base64
 }
 
-signature=`generate_signature supersecretkey $body$messageId$providerId$customerId`
+signature=`generate_signature supersecurekey $body$messageId$providerId$customerId`
 authHeader="Authorization: $customerId:$signature"
 echo $authHeader
 ```
