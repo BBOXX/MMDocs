@@ -291,7 +291,7 @@ Synchronous or Near Real-Time Transactions.</p>
 <span class="n">payload</span> <span class="o">=</span> <span class="n">body</span> <span class="o">+</span> <span class="n">messageId</span> <span class="o">+</span> <span class="n">providerId</span> <span class="o">+</span> <span class="n">customerId</span>
 <span class="n">payload</span> <span class="o">=</span> <span class="s">"test"</span>
 <span class="c"># Generate Signature</span>
-<span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="s">"supersecretkey"</span><span class="p">,</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="s">"supersecurekey"</span><span class="p">,</span><span class="n">payload</span><span class="p">)</span>
 <span class="c"># Construct Authorization Header</span>
 <span class="n">authHeader</span> <span class="o">=</span> <span class="s">"Authorization: "</span> <span class="o">+</span> <span class="n">customerId</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">signature</span><span class="p">;</span>
 
@@ -337,7 +337,7 @@ Synchronous or Near Real-Time Transactions.</p>
         <span class="c1">// Payload must be contructed in this order</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="n">body</span> <span class="o">+</span> <span class="n">messageId</span> <span class="o">+</span> <span class="n">providerId</span> <span class="o">+</span> <span class="n">customerId</span><span class="o">;</span>
 
-        <span class="n">String</span> <span class="n">signature</span> <span class="o">=</span> <span class="n">generateSignature</span><span class="o">(</span><span class="s">"supersecretkey"</span><span class="o">,</span><span class="n">payload</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">signature</span> <span class="o">=</span> <span class="n">generateSignature</span><span class="o">(</span><span class="s">"supersecurekey"</span><span class="o">,</span><span class="n">payload</span><span class="o">);</span>
 
         <span class="n">String</span> <span class="n">authHeader</span> <span class="o">=</span> <span class="s">"Authorization: "</span> <span class="o">+</span> <span class="n">customerId</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">signature</span><span class="o">;</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">authHeader</span><span class="o">);</span>
@@ -357,7 +357,7 @@ Synchronous or Near Real-Time Transactions.</p>
   <span class="nb">echo</span> -n <span class="s2">"</span><span class="nv">$payload</span><span class="s2">"</span> | openssl dgst -binary -sha1 -hmac <span class="s2">"</span><span class="nv">$sharedSecret</span><span class="s2">"</span> | openssl base64
 <span class="o">}</span>
 
-<span class="nv">signature</span><span class="o">=</span><span class="sb">`</span>generate_signature supersecretkey <span class="nv">$body$messageId$providerId$customerId</span><span class="sb">`</span>
+<span class="nv">signature</span><span class="o">=</span><span class="sb">`</span>generate_signature supersecurekey <span class="nv">$body$messageId$providerId$customerId</span><span class="sb">`</span>
 <span class="nv">authHeader</span><span class="o">=</span><span class="s2">"Authorization: </span><span class="nv">$customerId</span><span class="s2">:</span><span class="nv">$signature</span><span class="s2">"</span>
 <span class="nb">echo</span> <span class="nv">$authHeader</span>
 </code></pre>
