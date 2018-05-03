@@ -27,7 +27,7 @@ Synchronous or Near Real-Time Transactions.
 ## Authentication
 
 ```python
-# How to Generate the “Authorization” header in Python
+# How to Generate the "Authorization" header in Python
 
 import hmac
 from hashlib import sha1
@@ -45,7 +45,7 @@ providerId  = "12345"
 
 # Payload must be contructed in this order
 payload = body + messageId + providerId + customerId
-payload = "test"
+
 # Generate Signature
 signature = generate_signature("supersecurekey",payload)
 # Construct Authorization Header
@@ -56,7 +56,7 @@ print(authHeader)
 ```
 
 ```java
-// How to Generate the “Authorization” header in Java
+// How to Generate the "Authorization" header in Java
 
 import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
@@ -64,9 +64,8 @@ import java.security.InvalidKeyException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64; 
-import org.apache.commons.io.IOUtils;
 
-public class HelloWorld{
+public class GenerateSignature{
     
     protected static String generateSignature(String sharedSecret, String payload){
         byte[] raw_signature = null;
@@ -102,11 +101,10 @@ public class HelloWorld{
         System.out.print(authHeader);
     }
 }
-
 ```
 
 ```shell
-#  How to Generate the “Authorization” header in BASH
+#  How to Generate the "Authorization" header in BASH
 
 body="{\"name\":\"Bob\",\"amount\":32}"
 messageId="a2536ff7-886a-432d-a5ae-45ed9d12b016"
