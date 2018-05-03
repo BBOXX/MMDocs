@@ -271,7 +271,7 @@
         <h1 id='bboxx-rest-api'>BBOXX REST API</h1><h2 id='introduction'>Introduction</h2>
 <p>The  HTTP(S) POST Notification API is designed to help developers integrate third-party applications with BBOXX Mobile Money-system. This guide provides the technical information about integrating and configuring a system by  using RESTful HTTP(S) POST to recieve notification of Mobile Money transaction information. Companies can use this API to allow real-time mobile money transactions to be processed via Pulse. This document describes the HTTP POST parameters and the format of the expected response.
 Synchronous or Near Real-Time Transactions.</p>
-<h2 id='authentication'>Authentication</h2><pre class="highlight python tab-python"><code><span class="c"># How to Generate the “Authorization” header in Python</span>
+<h2 id='authentication'>Authentication</h2><pre class="highlight python tab-python"><code><span class="c"># How to Generate the "Authorization" header in Python</span>
 
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha1</span>
@@ -289,7 +289,7 @@ Synchronous or Near Real-Time Transactions.</p>
 
 <span class="c"># Payload must be contructed in this order</span>
 <span class="n">payload</span> <span class="o">=</span> <span class="n">body</span> <span class="o">+</span> <span class="n">messageId</span> <span class="o">+</span> <span class="n">providerId</span> <span class="o">+</span> <span class="n">customerId</span>
-<span class="n">payload</span> <span class="o">=</span> <span class="s">"test"</span>
+
 <span class="c"># Generate Signature</span>
 <span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="s">"supersecurekey"</span><span class="p">,</span><span class="n">payload</span><span class="p">)</span>
 <span class="c"># Construct Authorization Header</span>
@@ -297,7 +297,7 @@ Synchronous or Near Real-Time Transactions.</p>
 
 <span class="k">print</span><span class="p">(</span><span class="n">authHeader</span><span class="p">)</span>
 
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">// How to Generate the “Authorization” header in Java</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="c1">// How to Generate the "Authorization" header in Java</span>
 
 <span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.security.NoSuchAlgorithmException</span><span class="o">;</span>
@@ -305,9 +305,8 @@ Synchronous or Near Real-Time Transactions.</p>
 <span class="kn">import</span> <span class="nn">javax.crypto.Mac</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.crypto.spec.SecretKeySpec</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.commons.codec.binary.Base64</span><span class="o">;</span> 
-<span class="kn">import</span> <span class="nn">org.apache.commons.io.IOUtils</span><span class="o">;</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span><span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GenerateSignature</span><span class="o">{</span>
 
     <span class="kd">protected</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">generateSignature</span><span class="o">(</span><span class="n">String</span> <span class="n">sharedSecret</span><span class="o">,</span> <span class="n">String</span> <span class="n">payload</span><span class="o">){</span>
         <span class="kt">byte</span><span class="o">[]</span> <span class="n">raw_signature</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
@@ -343,8 +342,7 @@ Synchronous or Near Real-Time Transactions.</p>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">authHeader</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
-
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c">#  How to Generate the “Authorization” header in BASH</span>
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c">#  How to Generate the "Authorization" header in BASH</span>
 
 <span class="nv">body</span><span class="o">=</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Bob</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">amount</span><span class="se">\"</span><span class="s2">:32}"</span>
 <span class="nv">messageId</span><span class="o">=</span><span class="s2">"a2536ff7-886a-432d-a5ae-45ed9d12b016"</span>
