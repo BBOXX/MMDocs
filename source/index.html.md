@@ -20,8 +20,9 @@ search: true
 
 ## Introduction
 
-The  HTTP(S) POST Notification API is designed to help developers integrate third-party applications with BBOXX Mobile Money-system. This guide provides the technical information about integrating and configuring a system by  using RESTful HTTP(S) POST to recieve notification of Mobile Money transaction information. Companies can use this API to allow real-time mobile money transactions to be processed via Pulse. This document describes the HTTP POST parameters and the format of the expected response.
-Synchronous or Near Real-Time Transactions.
+The BBOXX Pulse API allows developers to integrate third-party applications with BBOXX. This documentation provides the technical information about integrating and configuring a payment system to send payment information to BBOXX. Companies can use this API to allow real-time mobile money transactions to be processed in Pulse. 
+
+[Click Here](pdf/BBOXX%20Mobile%20Money%20Payment%20Process%20Flowchart.pdf) for more information about the BBOXX's Mobile Money process.
 
 
 ## Authentication
