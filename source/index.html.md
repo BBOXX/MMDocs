@@ -452,9 +452,9 @@ Like many web services, BBOXX SOAP API is a combination of client-side and serve
 
 ## Authentication
 
-When you call BBOXX SOAP API, you must authenticate each request by using a set of API credentials. BBOXX associates a set of API credentials with a specific Mobile Money account.
+When you call BBOXX SOAP API, you must authenticate each request by using a username and password provided using "BASIC Authentication". 
 
-
+### How Basic Authentication Works
 
 ```shell
 
@@ -463,6 +463,16 @@ When you call BBOXX SOAP API, you must authenticate each request by using a set 
 
     
 ```  
+
+In basic authentication, the client requests a URL that requires authentication. The server requests the client (or user agent) to authenticate itself by sending a **401-Not Authorized** code. The client, in return, sends back the same request but with login credentials as a base64 encoded string in the format `username:password`. This string is sent in the `Authorization` header field as the following:
+
+```Authorization: Basic {base64_encode(username:password)}```
+
+So if the username is tutsplus and the password is 123456, the following header field would be sent with the request:
+
+```Authorization: Basic dHV0c3BsdXM6MTIzNDU2```
+
+Since the base64 encoded string can easily be decoded, this method is highly insecure to be used on an open network. Hence this method should only be used for debugging and development purposes when the connection between the server and the client is trusted.
 
 
 ## Request
