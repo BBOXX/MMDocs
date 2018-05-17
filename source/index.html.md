@@ -162,6 +162,99 @@ Authorization | The customerId combined with the signature. (See Authentication 
 MessageID | A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness
 MessageTimestamp | The timestamp of the payment in UTC timezone with the yyyyMMddHHmmss format
 
+## Customer Details 
+
+
+### Description
+Retrieve customer payment information. 
+
+
+The GET request will be sent to the following URL:
+/mm/v2/providers/{provider_id}/customers/{customer_id}
+
+
+Fields | description 
+---------- | ------- 
+provider_id |  The Mobile Operator provider ID that initiated the request. This is the same for all requests. 
+customer_id |  A unqiue identifier that represents the customer who made the payment.
+
+
+
+### Request Payload
+Refer to Authentication above for description of header
+
+```python
+
+
+url = 'https://payments-test.bboxx.co.uk/mm/v2/providers/{provider_id}/customers/{customer_id}'
+
+header ={'Content-Type':'application/json'
+        'Authorization':'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8=',
+        'MessageID':'74e46dafsf-8bbadafdsfdsffdb4c',
+        'Authorization':'{{Authorization}}'} 
+
+
+post = requests.get(url=url, header= header)
+   
+```
+
+
+
+
+### Response Payload 
+
+
+Upon the successful processing of the GET request, a JSON encoded response will be return in the following format: 
+
+
+```python
+{
+    "minimum_payment": null,
+    "down_payment": null,
+    "last_payments": [
+        {
+            "currency": "KES",
+            "amount": 2100,
+            "reference": "AE34252UV",
+            "timestamp": "2018-05-15T09:20:35Z"
+        },
+        {
+            "currency": "KES",
+            "amount": 5680,
+            "reference": "ADFST5342",
+            "timestamp": "2018-04-13T13:40:38Z"
+        }
+    ],
+    "currency": "KES",
+    "daily_rate": null,
+    "full_name": "BOB SMITH",
+    "expire_date": null,
+    "phone_numbers": [
+        {
+            "phone_number": "0765345678",
+            "prefered_phone": true
+        },
+        {
+            "phone_number": "0734646334",
+            "prefered_phone": false
+        }
+    ]
+}
+
+
+```
+
+Parameter | description 
+---------- | ------- 
+minimum_payment | Amount required for switch on (NULL if customer has no equipment installed)
+down_payment | Amount required to allow installation
+last_payments | List of Customers last 3 payments, including currency, ammount, reference and timestamp 
+currency | Customers default payment currency 
+daily_rate | Cost of single day of energy
+expire_date | Date equipment will shut down if no further payments made
+phone_numbers | List of customer phone numbers including prefered_phone option
+
+
 
 ## HTTP POST
 
