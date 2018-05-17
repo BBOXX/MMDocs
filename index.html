@@ -233,6 +233,9 @@
                     <a href="#headers" class="toc-h2 toc-link" data-title="headers">Headers</a>
                   </li>
                   <li>
+                    <a href="#customer-details" class="toc-h2 toc-link" data-title="customer-details">Customer Details</a>
+                  </li>
+                  <li>
                     <a href="#http-post" class="toc-h2 toc-link" data-title="http-post">HTTP POST</a>
                   </li>
                   <li>
@@ -414,7 +417,114 @@ MessageTimestamp:yyyyMMddHHmmss
 <td>The timestamp of the payment in UTC timezone with the yyyyMMddHHmmss format</td>
 </tr>
 </tbody></table>
-<h2 id='http-post'>HTTP POST</h2><h3 id='description'>Description</h3>
+<h2 id='customer-details'>Customer Details</h2><h3 id='description'>Description</h3>
+<p>Retrieve customer payment information. </p>
+
+<p>The GET request will be sent to the following URL:
+/mm/v2/providers/{provider_id}/customers/{customer_id}</p>
+
+<table><thead>
+<tr>
+<th>Fields</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>provider_id</td>
+<td>The Mobile Operator provider ID that initiated the request. This is the same for all requests.</td>
+</tr>
+<tr>
+<td>customer_id</td>
+<td>A unqiue identifier that represents the customer who made the payment.</td>
+</tr>
+</tbody></table>
+<h3 id='request-payload'>Request Payload</h3>
+<p>Refer to Authentication above for description of header</p>
+<pre class="highlight python tab-python"><code>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://payments-test.bboxx.co.uk/mm/v2/providers/{provider_id}/customers/{customer_id}'</span>
+
+<span class="n">header</span> <span class="o">=</span><span class="p">{</span><span class="s">'Content-Type'</span><span class="p">:</span><span class="s">'application/json'</span>
+        <span class="s">'Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span>
+        <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46dafsf-8bbadafdsfdsffdb4c'</span><span class="p">,</span>
+        <span class="s">'Authorization'</span><span class="p">:</span><span class="s">'{{Authorization}}'</span><span class="p">}</span> 
+
+
+<span class="n">post</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span> <span class="n">header</span><span class="p">)</span>
+
+</code></pre><h3 id='response-payload'>Response Payload</h3>
+<p>Upon the successful processing of the GET request, a JSON encoded response will be return in the following format: </p>
+<pre class="highlight python tab-python"><code><span class="p">{</span>
+    <span class="s">"minimum_payment"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s">"down_payment"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s">"last_payments"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"currency"</span><span class="p">:</span> <span class="s">"KES"</span><span class="p">,</span>
+            <span class="s">"amount"</span><span class="p">:</span> <span class="mi">2100</span><span class="p">,</span>
+            <span class="s">"reference"</span><span class="p">:</span> <span class="s">"AE34252UV"</span><span class="p">,</span>
+            <span class="s">"timestamp"</span><span class="p">:</span> <span class="s">"2018-05-15T09:20:35Z"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s">"currency"</span><span class="p">:</span> <span class="s">"KES"</span><span class="p">,</span>
+            <span class="s">"amount"</span><span class="p">:</span> <span class="mi">5680</span><span class="p">,</span>
+            <span class="s">"reference"</span><span class="p">:</span> <span class="s">"ADFST5342"</span><span class="p">,</span>
+            <span class="s">"timestamp"</span><span class="p">:</span> <span class="s">"2018-04-13T13:40:38Z"</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s">"currency"</span><span class="p">:</span> <span class="s">"KES"</span><span class="p">,</span>
+    <span class="s">"daily_rate"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s">"full_name"</span><span class="p">:</span> <span class="s">"BOB SMITH"</span><span class="p">,</span>
+    <span class="s">"expire_date"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s">"phone_numbers"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"phone_number"</span><span class="p">:</span> <span class="s">"0765345678"</span><span class="p">,</span>
+            <span class="s">"prefered_phone"</span><span class="p">:</span> <span class="n">true</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s">"phone_number"</span><span class="p">:</span> <span class="s">"0734646334"</span><span class="p">,</span>
+            <span class="s">"prefered_phone"</span><span class="p">:</span> <span class="n">false</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+
+</code></pre>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>minimum_payment</td>
+<td>Amount required for switch on (NULL if customer has no equipment installed)</td>
+</tr>
+<tr>
+<td>down_payment</td>
+<td>Amount required to allow installation</td>
+</tr>
+<tr>
+<td>last_payments</td>
+<td>List of Customers last 3 payments, including currency, ammount, reference and timestamp</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>Customers default payment currency</td>
+</tr>
+<tr>
+<td>daily_rate</td>
+<td>Cost of single day of energy</td>
+</tr>
+<tr>
+<td>expire_date</td>
+<td>Date equipment will shut down if no further payments made</td>
+</tr>
+<tr>
+<td>phone_numbers</td>
+<td>List of customer phone numbers including prefered_phone option</td>
+</tr>
+</tbody></table>
+<h2 id='http-post'>HTTP POST</h2><h3 id='description-2'>Description</h3>
 <p>This endpoint allows for a payment to be created. </p>
 
 <p>The POST request will be sent to the following URL:
@@ -435,7 +545,7 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/<providerId>/customers
 <td>A unqiue identifier that represents the customer who made the payment. Depending on the provider this can be an account number, email address, internal identifier</td>
 </tr>
 </tbody></table>
-<h3 id='request-payload'>Request Payload</h3>
+<h3 id='request-payload-2'>Request Payload</h3>
 <p>Following table provides information of each JSON field of the HTTP request body:</p>
 <pre class="highlight shell tab-shell"><code>
 curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Content-Type: application/json"</span> 
@@ -532,7 +642,7 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/24
 <td>Currency in use</td>
 </tr>
 </tbody></table>
-<h3 id='response-payload'>Response Payload</h3>
+<h3 id='response-payload-2'>Response Payload</h3>
 <p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: </p>
 <pre class="highlight python tab-python"><code>
  <span class="p">{</span><span class="s">"providerTransactionId"</span><span class="p">:</span><span class="s">"0123456"</span><span class="p">,</span>
@@ -560,7 +670,7 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/24
 <td>Tne description message</td>
 </tr>
 </tbody></table>
-<h2 id='http-get'>HTTP GET</h2><h3 id='description-2'>Description</h3>
+<h2 id='http-get'>HTTP GET</h2><h3 id='description-3'>Description</h3>
 <p>The GET request will bring you the content of a historical transaction</p>
 
 <p>The GET request will be sent to the following URL:
@@ -597,7 +707,7 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/24
 <td>Hash to authentication the requesting system</td>
 </tr>
 </tbody></table>
-<h3 id='response-payload-2'>Response Payload</h3>
+<h3 id='response-payload-3'>Response Payload</h3>
 <p>Upon the successful processing of the GET request, a JSON encoded response will be return in the following format:</p>
 <pre class="highlight shell tab-shell"><code>
  <span class="s1">'{"transactionId" : "123647",
@@ -694,7 +804,7 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/24
 <td>3 possible status of the request : Accepted</td>
 </tr>
 </tbody></table>
-<h3 id='response-payload-3'>Response Payload</h3>
+<h3 id='response-payload-4'>Response Payload</h3>
 <p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: </p>
 <pre class="highlight shell tab-shell"><code>
  <span class="o">{</span><span class="s2">"providerTransactionId"</span>:<span class="s2">"0123456"</span>,
@@ -815,12 +925,12 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/24
 <p><code>Authorization: Basic dHV0c3BsdXM6MTIzNDU2</code></p>
 
 <p>Since the base64 encoded string can easily be decoded, this method is highly insecure to be used on an open network. Hence this method should only be used for debugging and development purposes when the connection between the server and the client is trusted.</p>
-<h2 id='request'>Request</h2><h4 id='description-3'>Description</h4>
+<h2 id='request'>Request</h2><h4 id='description-4'>Description</h4>
 <p>This endpoint allows for a payment to be created. </p>
 
 <p>The POST request will be sent to the following URL:
 https://payments-test.bboxx.co.uk/mm/XMLPay</p>
-<h4 id='request-payload-2'>Request Payload</h4>
+<h4 id='request-payload-3'>Request Payload</h4>
 <p>Following table provides information of each XMl fields:</p>
 <pre class="highlight xml tab-xml"><code>
 <span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
@@ -919,7 +1029,7 @@ https://payments-test.bboxx.co.uk/mm/XMLPay</p>
 <td>Status of the request : Accepted</td>
 </tr>
 </tbody></table>
-<h3 id='response-payload-4'>Response Payload</h3>
+<h3 id='response-payload-5'>Response Payload</h3>
 <p>Upon the successful processing of the POST request, a XML response will be return : </p>
 <pre class="highlight xml tab-xml"><code>
 <span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
