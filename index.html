@@ -442,7 +442,7 @@ MessageTimestamp:yyyyMMddHHmmss
 <p>Refer to Authentication above for description of header</p>
 <pre class="highlight python tab-python"><code>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://payments-test.bboxx.co.uk/mm/v2/providers/{provider_id}/customers/{customer_id}'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{provider_id}/customers/{customer_id}'</span>
 
 <span class="n">header</span> <span class="o">=</span><span class="p">{</span><span class="s">'Content-Type'</span><span class="p">:</span><span class="s">'application/json'</span>
         <span class="s">'Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span>
@@ -521,7 +521,7 @@ MessageTimestamp:yyyyMMddHHmmss
 <p>This endpoint allows for a payment to be created. </p>
 
 <p>The POST request will be sent to the following URL:
-https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/<providerId>/customers/<customerId>/payments</p>
+https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/<providerId>/customers/<customerId>/payments</p>
 
 <table><thead>
 <tr>
@@ -545,12 +545,12 @@ curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"
  -H <span class="s2">"Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y="</span> -H <span class="s2">"SMSSupport:Y"</span>
  -H <span class="s2">"MessageID:74e46da-41ff-8bba-f529-930acbffdb4c"</span>, -H <span class="s2">"MessageTimestamp:20161029113022"</span> 
  -X GET -d <span class="s1">'{"transactionId" : "123647","reference" : "bill-0001","operator" : "Mobile_provider","subscriber" : "243858606953","countryCode" : "CD","transaction_type": "PayBill","first_name": "Jhon","account_number":"45678","last_name":  "Doe","amountTargetValue":  78.79,"amountTargetCurrency":  "GBP","exchangeRate":  1.38,"currency" : "USD","amount" : 100.00 }'</span>
-https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
+https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/customers/243858606953/payments
 
 
 </code></pre><pre class="highlight python tab-python"><code>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/200/customers/12000/payments'</span>
 
 <span class="n">Headers</span> <span class="o">=</span><span class="p">{</span><span class="s">' Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span>
         <span class="s">'SMSSupport:Y'</span> <span class="p">,</span>
@@ -667,18 +667,18 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/24
 <p>The GET request will bring you the content of a historical transaction</p>
 
 <p>The GET request will be sent to the following URL:
-https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments</p>
+https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments</p>
 <pre class="highlight shell tab-shell"><code>
 curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Content-Type: application/json"</span> 
  -H <span class="s2">"Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y="</span> 
  -H <span class="s2">"SMSSupport:Y"</span>
  -H <span class="s2">"MessageID:74e46da-41ff-8bba-f529-930acbffdb4c"</span>, 
  -H <span class="s2">"MessageTimestamp:20161029113022"</span> 
-https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
+https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/customers/243858606953/payments
 
 </code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">url</span> <span class="o">=</span>  <span class="s">'https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'</span>
+<span class="n">url</span> <span class="o">=</span>  <span class="s">'https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/200/customers/12000/payments'</span>
 
 <span class="n">Headers</span><span class="o">=</span><span class="p">{</span><span class="s">' Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span> <span class="s">'SMSSupport:Y'</span> <span class="p">,</span>
           <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46da2-41ff-8bba-f529-930acbffdb4c'</span><span class="p">,</span><span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span> 
@@ -905,7 +905,7 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/24
 <p>When you call BBOXX SOAP API, you must authenticate each request by using a username and password provided using &quot;BASIC Authentication&quot;. </p>
 <h3 id='how-basic-authentication-works'>How Basic Authentication Works</h3><pre class="highlight shell tab-shell"><code>
  curl -H <span class="s2">"Content-Type: text/xml"</span> -u MobileProvider:3drvJjs9#324Qfa 
- -X POST -d @Payment.xml -i  https://payments-test.bboxx.co.uk/mm/XMLPay
+ -X POST -d @Payment.xml -i  https://payments-test.bboxx.co.uk/pulseapi/mm/XMLPay
 
 
 </code></pre>
@@ -922,7 +922,7 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/24
 <p>This endpoint allows for a payment to be created. </p>
 
 <p>The POST request will be sent to the following URL:
-https://payments-test.bboxx.co.uk/mm/XMLPay</p>
+https://payments-test.bboxx.co.uk/pulseapi/mm/XMLPay</p>
 <h4 id='request-payload-3'>Request Payload</h4>
 <p>Following table provides information of each XMl fields:</p>
 <pre class="highlight xml tab-xml"><code>
