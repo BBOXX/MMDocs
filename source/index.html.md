@@ -186,7 +186,7 @@ Refer to Authentication above for description of header
 ```python
 
 
-url = 'https://payments-test.bboxx.co.uk/mm/v2/providers/{provider_id}/customers/{customer_id}'
+url = 'https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{provider_id}/customers/{customer_id}'
 
 header ={'Content-Type':'application/json'
         'Authorization':'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8=',
@@ -260,7 +260,7 @@ This endpoint allows for a payment to be created.
 
 
 The POST request will be sent to the following URL:
-https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/<providerId>/customers/<customerId>/payments
+https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/<providerId>/customers/<customerId>/payments
 
 
 Name | description 
@@ -279,7 +279,7 @@ curl -H "Accept: application/json" -H "Content-Type: application/json"
  -H "Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y=" -H "SMSSupport:Y"
  -H "MessageID:74e46da-41ff-8bba-f529-930acbffdb4c", -H "MessageTimestamp:20161029113022" 
  -X GET -d '{"transactionId" : "123647","reference" : "bill-0001","operator" : "Mobile_provider","subscriber" : "243858606953","countryCode" : "CD","transaction_type": "PayBill","first_name": "Jhon","account_number":"45678","last_name":  "Doe","amountTargetValue":  78.79,"amountTargetCurrency":  "GBP","exchangeRate":  1.38,"currency" : "USD","amount" : 100.00 }'
-https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
+https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/customers/243858606953/payments
 
 
 ```
@@ -287,7 +287,7 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/24
 ```python
 
 
-url = 'https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'
+url = 'https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/200/customers/12000/payments'
 
 Headers ={' Authorization':'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8=',
         'SMSSupport:Y' ,
@@ -362,7 +362,7 @@ The GET request will bring you the content of a historical transaction
 
 
 The GET request will be sent to the following URL:
-https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments
+https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments
 
 
 ```shell
@@ -372,7 +372,7 @@ curl -H "Accept: application/json" -H "Content-Type: application/json"
  -H "SMSSupport:Y"
  -H "MessageID:74e46da-41ff-8bba-f529-930acbffdb4c", 
  -H "MessageTimestamp:20161029113022" 
-https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/243858606953/payments
+https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/customers/243858606953/payments
     
 ```
 
@@ -380,7 +380,7 @@ https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/343755867/customers/24
 ```python
 import requests
 
-url =  'https://payments-test.bboxx.co.uk/mm/1.0/payments/payment/200/customers/12000/payments'
+url =  'https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/200/customers/12000/payments'
 
 Headers={' Authorization':'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8=', 'SMSSupport:Y' ,
           'MessageID':'74e46da2-41ff-8bba-f529-930acbffdb4c','MessageTimestamp':'20161029113022'} 
@@ -548,7 +548,7 @@ When you call BBOXX SOAP API, you must authenticate each request by using a user
 ```shell
 
  curl -H "Content-Type: text/xml" -u MobileProvider:3drvJjs9#324Qfa 
- -X POST -d @Payment.xml -i  https://payments-test.bboxx.co.uk/mm/XMLPay
+ -X POST -d @Payment.xml -i  https://payments-test.bboxx.co.uk/pulseapi/mm/XMLPay
 
     
 ```  
@@ -572,7 +572,7 @@ This endpoint allows for a payment to be created.
 
 
 The POST request will be sent to the following URL:
-https://payments-test.bboxx.co.uk/mm/XMLPay
+https://payments-test.bboxx.co.uk/pulseapi/mm/XMLPay
 
 
 
