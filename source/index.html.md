@@ -213,19 +213,16 @@ Upon the successful processing of the GET request, a JSON encoded response will 
     "down_payment": null,
     "last_payments": [
         {
-            "currency": "KES",
             "amount": 2100,
             "reference": "AE34252UV",
             "timestamp": "2018-05-15T09:20:35Z"
         },
         {
-            "currency": "KES",
             "amount": 5680,
             "reference": "ADFST5342",
             "timestamp": "2018-04-13T13:40:38Z"
         }
     ],
-    "currency": "KES",
     "daily_rate": null,
     "full_name": "BOB SMITH",
     "expire_date": null,
@@ -249,7 +246,6 @@ Parameter | description
 minimum_payment | Amount required for switch on (NULL if customer has no equipment installed)
 down_payment | Amount required to allow installation
 last_payments | List of Customers last 3 payments, including currency, ammount, reference and timestamp 
-currency | Customers default payment currency 
 daily_rate | Cost of single day of energy
 expire_date | Date equipment will shut down if no further payments made
 phone_numbers | List of customer phone numbers including prefered_phone option
