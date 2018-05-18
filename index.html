@@ -230,16 +230,13 @@
                     <a href="#authentication" class="toc-h2 toc-link" data-title="authentication">Authentication</a>
                   </li>
                   <li>
-                    <a href="#headers" class="toc-h2 toc-link" data-title="headers">Headers</a>
+                    <a href="#get-customer-details" class="toc-h2 toc-link" data-title="get-customer-details">[GET] Customer Details</a>
                   </li>
                   <li>
-                    <a href="#customer-details" class="toc-h2 toc-link" data-title="customer-details">Customer Details</a>
+                    <a href="#post-payment" class="toc-h2 toc-link" data-title="post-payment">[POST] Payment</a>
                   </li>
                   <li>
-                    <a href="#http-post" class="toc-h2 toc-link" data-title="http-post">HTTP POST</a>
-                  </li>
-                  <li>
-                    <a href="#http-get" class="toc-h2 toc-link" data-title="http-get">HTTP GET</a>
+                    <a href="#get-payment" class="toc-h2 toc-link" data-title="get-payment">[GET] Payment</a>
                   </li>
                   <li>
                     <a href="#errors-code" class="toc-h2 toc-link" data-title="errors-code">Errors code</a>
@@ -387,12 +384,14 @@
 <li>Then create the <code>signature</code> by Base64 encoding the <code>raw_signature</code></li>
 <li>Then create the “Authorization” header by combining the <code>customerId</code> and the <code>signature</code> seperated by a colon <code>:</code></li>
 </ol>
-<h2 id='headers'>Headers</h2>
-<p>The following header is mandatory for every message exchanged with the REST API :</p>
-<pre class="highlight plaintext"><code>Content-Type:application/json
+<h2 id='get-customer-details'>[GET] Customer Details</h2><h3 id='description'>Description</h3>
+<p>Retrieve customer payment information. </p>
+
+<p>The GET request will be sent to the following URL:
+https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{provider_id}/customers/{customer_id}</p>
+<h3 id='headers'>Headers</h3><pre class="highlight plaintext"><code>Content-Type:application/json
 Authorization:12345:XXXXXXXXXXXX=
 MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-MessageTimestamp:yyyyMMddHHmmss
 </code></pre>
 <table><thead>
 <tr>
@@ -412,17 +411,8 @@ MessageTimestamp:yyyyMMddHHmmss
 <td>MessageID</td>
 <td>A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness</td>
 </tr>
-<tr>
-<td>MessageTimestamp</td>
-<td>The timestamp of the payment in UTC timezone with the yyyyMMddHHmmss format</td>
-</tr>
 </tbody></table>
-<h2 id='customer-details'>Customer Details</h2><h3 id='description'>Description</h3>
-<p>Retrieve customer payment information. </p>
-
-<p>The GET request will be sent to the following URL:
-/mm/v2/providers/{provider_id}/customers/{customer_id}</p>
-
+<h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Fields</th>
@@ -454,35 +444,33 @@ MessageTimestamp:yyyyMMddHHmmss
 
 </code></pre><h3 id='response-payload'>Response Payload</h3>
 <p>Upon the successful processing of the GET request, a JSON encoded response will be return in the following format: </p>
-<pre class="highlight python tab-python"><code><span class="p">{</span>
-    <span class="s">"minimum_payment"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-    <span class="s">"down_payment"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-    <span class="s">"last_payments"</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s">"amount"</span><span class="p">:</span> <span class="mi">2100</span><span class="p">,</span>
-            <span class="s">"reference"</span><span class="p">:</span> <span class="s">"AE34252UV"</span><span class="p">,</span>
-            <span class="s">"timestamp"</span><span class="p">:</span> <span class="s">"2018-05-15T09:20:35Z"</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s">"amount"</span><span class="p">:</span> <span class="mi">5680</span><span class="p">,</span>
-            <span class="s">"reference"</span><span class="p">:</span> <span class="s">"ADFST5342"</span><span class="p">,</span>
-            <span class="s">"timestamp"</span><span class="p">:</span> <span class="s">"2018-04-13T13:40:38Z"</span>
-        <span class="p">}</span>
-    <span class="p">],</span>
-    <span class="s">"daily_rate"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-    <span class="s">"full_name"</span><span class="p">:</span> <span class="s">"BOB SMITH"</span><span class="p">,</span>
-    <span class="s">"expire_date"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-    <span class="s">"phone_numbers"</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s">"phone_number"</span><span class="p">:</span> <span class="s">"0765345678"</span><span class="p">,</span>
-            <span class="s">"prefered_phone"</span><span class="p">:</span> <span class="n">true</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s">"phone_number"</span><span class="p">:</span> <span class="s">"0734646334"</span><span class="p">,</span>
-            <span class="s">"prefered_phone"</span><span class="p">:</span> <span class="n">false</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span>
+<pre class="highlight plaintext"><code>{
+    "minimum_payment": null,
+    "down_payment": null,
+    "last_payments": [
+        {
+            "amount": 2100,
+            "reference": "AE34252UV",
+            "timestamp": "2018-05-15T09:20:35Z"
+        },
+        {
+            "amount": 5680,
+            "reference": "ADFST5342",
+            "timestamp": "2018-04-13T13:40:38Z"
+        }
+    ],
+    "daily_rate": null,
+    "full_name": "BOB SMITH",
+    "expire_date": null,
+    "phone_numbers": [
+        {
+            "phone_number": "0765345678"
+        },
+        {
+            "phone_number": "0734646334"
+        }
+    ]
+}
 
 
 </code></pre>
@@ -517,12 +505,40 @@ MessageTimestamp:yyyyMMddHHmmss
 <td>List of customer phone numbers including prefered_phone option</td>
 </tr>
 </tbody></table>
-<h2 id='http-post'>HTTP POST</h2><h3 id='description-2'>Description</h3>
+<h2 id='post-payment'>[POST] Payment</h2><h3 id='description-2'>Description</h3>
 <p>This endpoint allows for a payment to be created. </p>
 
 <p>The POST request will be sent to the following URL:
-https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/<providerId>/customers/<customerId>/payments</p>
-
+https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/{providerId}/customers/{customerId}/payments</p>
+<h3 id='headers-2'>Headers</h3><pre class="highlight plaintext"><code>Content-Type:application/json
+Authorization:12345:XXXXXXXXXXXX=
+MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+MessageTimestamp:yyyyMMddHHmmss
+</code></pre>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Content-Type</td>
+<td>If a request payload is sent, it should always be a JSON string</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>The customerId combined with the signature. (See Authentication section)</td>
+</tr>
+<tr>
+<td>MessageID</td>
+<td>A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness</td>
+</tr>
+<tr>
+<td>MessageTimestamp</td>
+<td>The timestamp of the payment in UTC timezone with the yyyyMMddHHmmss format</td>
+</tr>
+</tbody></table>
+<h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -579,44 +595,32 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 </tr>
 </thead><tbody>
 <tr>
-<td>transactionId <br><font color="DarkGray"><em>string</em></font></td>
+<td>transactionId <br><font color="DarkGray"><em>string</em></font><br><font color="Red">required</font></td>
 <td>Unique identifier of the payment as generated by the MMO</td>
 </tr>
 <tr>
-<td>operator<br><font color="DarkGray"><em>string</em></font></td>
-<td>Unique identifier of the MMO</td>
-</tr>
-<tr>
-<td>subscriber <br><font color="DarkGray"><em>string</em></font></td>
+<td>subscriber <br><font color="DarkGray"><em>string</em></font><br><font color="Red">required</font></td>
 <td>Unique identifier of the end customer in the MMO’s system. This is usually the MSISDN</td>
 </tr>
 <tr>
-<td>reference <br><font color="DarkGray"><em>string</em></font></td>
+<td>reference <br><font color="DarkGray"><em>string</em></font><br><font color="Red">required</font></td>
 <td>The reference number as assigned to the transaction by the mobile money provider</td>
 </tr>
 <tr>
-<td>internal_transaction_id<br><font color="DarkGray"><em>string</em></font></td>
-<td>The internal ID of the transaction within the System.</td>
-</tr>
-<tr>
-<td>transaction_type <br><font color="DarkGray"><em>string</em></font></td>
-<td>The type of the transaction eg. Paybill, Buygoods etc,</td>
-</tr>
-<tr>
-<td>account_number <br><font color="DarkGray"><em>string</em></font></td>
-<td>The account number as entered by the subscriber. (optional – only for Paybill payments)</td>
-</tr>
-<tr>
-<td>first_name <br><font color="DarkGray"><em>string</em></font></td>
+<td>first_name <br><font color="DarkGray"><em>string</em></font><br><font color="Red">required</font></td>
 <td>The first name of the subscriber</td>
 </tr>
 <tr>
-<td>last_name <br><font color="DarkGray"><em>string</em></font></td>
+<td>last_name <br><font color="DarkGray"><em>string</em></font><br><font color="Red">required</font></td>
 <td>The last name of the subscriber</td>
 </tr>
 <tr>
-<td>amount <br><font color="DarkGray"><em>int</em></font></td>
-<td>Contains the amount to be paid in local currency</td>
+<td>amount <br><font color="DarkGray"><em>int</em></font><br><font color="Red">required</font></td>
+<td>The amount to be paid in local currency</td>
+</tr>
+<tr>
+<td>currency <br><font color="DarkGray"><em>string</em></font><br><font color="Red">required</font></td>
+<td>The local currency reference</td>
 </tr>
 <tr>
 <td>amountTargetValue <br><font color="DarkGray"><em>int</em></font></td>
@@ -630,17 +634,26 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 <td>exchangeRate <br><font color="DarkGray"><em>int</em></font></td>
 <td>Exchange rate between both currencies (if applicable)</td>
 </tr>
-<tr>
-<td>currency <br><font color="DarkGray"><em>string</em></font></td>
-<td>Currency in use</td>
-</tr>
 </tbody></table>
 <h3 id='response-payload-2'>Response Payload</h3>
 <p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: </p>
-<pre class="highlight python tab-python"><code>
- <span class="p">{</span><span class="s">"providerTransactionId"</span><span class="p">:</span><span class="s">"0123456"</span><span class="p">,</span>
-      <span class="s">"status"</span><span class="p">:</span> <span class="s">"ACCEPTED"</span><span class="p">,</span>
-      <span class="s">"Description"</span><span class="p">:</span> <span class="s">"Dear Customer the payment was accepted."</span><span class="p">}</span>
+<pre class="highlight plaintext"><code>
+ {
+  "status": "ACCEPTED",
+  "first_name": "James",
+  "last_name": "Bond",
+  "reference": "XGDJDNF",
+  "countryCode": "KE",
+  "providerTransactionId": 1642572,
+  "transaction_type": "PayBill",
+  "subscriber": "00000000",
+  "currency": "XOF",
+  "amount": 150,
+  "account_number": "1234134",
+  "operator": "Test Payments Company",
+  "transactionId": "kXr5zLQG89HI43l8pfSR",
+  "smsMessage": "Dear Customer the payment was accepted."
+}
 
 
 </code></pre>
@@ -663,12 +676,7 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 <td>Tne description message</td>
 </tr>
 </tbody></table>
-<h2 id='http-get'>HTTP GET</h2><h3 id='description-3'>Description</h3>
-<p>The GET request will bring you the content of a historical transaction</p>
-
-<p>The GET request will be sent to the following URL:
-https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/<Providerid>/customers/<CustomerId>/payments</p>
-<pre class="highlight shell tab-shell"><code>
+<h2 id='get-payment'>[GET] Payment</h2><pre class="highlight shell tab-shell"><code>
 curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Content-Type: application/json"</span> 
  -H <span class="s2">"Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y="</span> 
  -H <span class="s2">"SMSSupport:Y"</span>
@@ -684,6 +692,15 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
           <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46da2-41ff-8bba-f529-930acbffdb4c'</span><span class="p">,</span><span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span> 
 
 <span class="n">post</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
+</code></pre><h3 id='description-3'>Description</h3>
+<p>The GET request will bring you the content of a historical transaction</p>
+
+<p>The GET request will be sent to the following URL:
+https://payments-test.bboxx.co.uk/pulseapi/1.0/payments/payment/{providerId}/customers/{customerId}/transaction/{transactionId}/payments</p>
+<h3 id='headers-3'>Headers</h3><pre class="highlight plaintext"><code>Content-Type:application/json
+Authorization:12345:XXXXXXXXXXXX=
+MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+MessageTimestamp:yyyyMMddHHmmss
 </code></pre>
 <table><thead>
 <tr>
@@ -692,123 +709,50 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 </tr>
 </thead><tbody>
 <tr>
-<td>ProviderId</td>
+<td>Content-Type</td>
 <td>If a request payload is sent, it should always be a JSON string</td>
 </tr>
 <tr>
-<td>CustomerId</td>
-<td>Hash to authentication the requesting system</td>
+<td>Authorization</td>
+<td>The customerId combined with the signature. (See Authentication section)</td>
+</tr>
+<tr>
+<td>MessageID</td>
+<td>A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness</td>
+</tr>
+<tr>
+<td>MessageTimestamp</td>
+<td>The timestamp of the payment in UTC timezone with the yyyyMMddHHmmss format</td>
 </tr>
 </tbody></table>
-<h3 id='response-payload-3'>Response Payload</h3>
-<p>Upon the successful processing of the GET request, a JSON encoded response will be return in the following format:</p>
-<pre class="highlight shell tab-shell"><code>
- <span class="s1">'{"transactionId" : "123647",
-        "reference" : "4526",
-        "operator" : "Mobile_provider", 
-        "subscriber" : "250786474859", 
-        "countryCode" : "RW", 
-        "currency" : "RWF", 
-        "transaction_type": "PayBill"
-        "first_name": "Jhon",
-        "account_number": "45678",
-        "last_name": "Doe",
-        "amount" : 200.0 }'</span> 
-
-</code></pre><pre class="highlight python tab-python"><code>
- <span class="s">'{"transactionId" : "123647",</span><span class="err">
-</span><span class="s">        "reference" : "4526",</span><span class="err">
-</span><span class="s">        "operator" : "Mobile_provider", </span><span class="err">
-</span><span class="s">        "subscriber" : "250786474859", </span><span class="err">
-</span><span class="s">        "countryCode" : "RW", </span><span class="err">
-</span><span class="s">        "currency" : "RWF", </span><span class="err">
-</span><span class="s">        "transaction_type": "PayBill"</span><span class="err">
-</span><span class="s">        "first_name": "Jhon",</span><span class="err">
-</span><span class="s">        "account_number": "45678",</span><span class="err">
-</span><span class="s">        "last_name": "Doe",</span><span class="err">
-</span><span class="s">        "amount" : 200.0 }'</span> 
-
-
-</code></pre>
+<h3 id='url-parameters-3'>URL Parameters</h3>
 <table><thead>
 <tr>
-<th>Fields</th>
-<th>Description</th>
+<th>Name</th>
+<th>description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>transactionId <br><font color="DarkGray"><em>string</em></font></td>
-<td>Unique identifier of the payment as generated by the MMO</td>
+<td>providerId</td>
+<td>If a request payload is sent, it should always be a JSON string</td>
 </tr>
 <tr>
-<td>operator<br><font color="DarkGray"><em>string</em></font></td>
-<td>Unique identifier of the MMO</td>
+<td>customerId</td>
+<td>Hash to authentication the requesting system</td>
 </tr>
 <tr>
-<td>subscriber <br><font color="DarkGray"><em>string</em></font></td>
-<td>Unique identifier of the end customer in the MMO’s system. This is usually the MSISDN</td>
-</tr>
-<tr>
-<td>reference <br><font color="DarkGray"><em>string</em></font></td>
-<td>The reference number as assigned to the transaction by the mobile money provider</td>
-</tr>
-<tr>
-<td>internal_transaction_id<br><font color="DarkGray"><em>string</em></font></td>
-<td>The internal ID of the transaction within the System.</td>
-</tr>
-<tr>
-<td>transaction_type <br><font color="DarkGray"><em>string</em></font></td>
-<td>The type of the transaction eg. Paybill, Buygoods etc,</td>
-</tr>
-<tr>
-<td>account_number <br><font color="DarkGray"><em>string</em></font></td>
-<td>The account number as entered by the subscriber. (optional – only for Paybill payments)</td>
-</tr>
-<tr>
-<td>first_name <br><font color="DarkGray"><em>string</em></font></td>
-<td>The first name of the subscriber</td>
-</tr>
-<tr>
-<td>last_name <br><font color="DarkGray"><em>string</em></font></td>
-<td>The last name of the subscriber</td>
-</tr>
-<tr>
-<td>amount <br><font color="DarkGray"><em>int</em></font></td>
-<td>The amount to be paid in local currency</td>
-</tr>
-<tr>
-<td>amountTargetValue <br><font color="DarkGray"><em>int</em></font></td>
-<td>Contains the amount to be paid in target currency</td>
-</tr>
-<tr>
-<td>amountTargetCurrency <br><font color="DarkGray"><em>int</em></font></td>
-<td>Contains the target currency reference</td>
-</tr>
-<tr>
-<td>exchangeRate <br><font color="DarkGray"><em>int</em></font></td>
-<td>Exchange rate between both currencies (if applicable)</td>
-</tr>
-<tr>
-<td>currency <br><font color="DarkGray"><em>string</em></font></td>
-<td>The local currency reference</td>
-</tr>
-<tr>
-<td>status <br><font color="DarkGray"><em>string</em></font></td>
-<td>3 possible status of the request : Accepted</td>
+<td>transactionId</td>
+<td>The unique reference for the payment that should be retreieved</td>
 </tr>
 </tbody></table>
-<h3 id='response-payload-4'>Response Payload</h3>
+<h3 id='response-payload-3'>Response Payload</h3>
 <p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: </p>
-<pre class="highlight shell tab-shell"><code>
- <span class="o">{</span><span class="s2">"providerTransactionId"</span>:<span class="s2">"0123456"</span>,
-        <span class="s2">"status"</span>: <span class="s2">"ACCEPTED"</span>,
-        <span class="s2">"Description"</span>: <span class="s2">"Dear Customer the payment was accepted."</span><span class="o">}</span>
-
-
-</code></pre><pre class="highlight python tab-python"><code>
- <span class="p">{</span><span class="s">"providerTransactionId"</span><span class="p">:</span><span class="s">"0123456"</span><span class="p">,</span>
-        <span class="s">"status"</span><span class="p">:</span> <span class="s">"ACCEPTED"</span><span class="p">,</span>
-        <span class="s">"Description"</span><span class="p">:</span> <span class="s">"Dear Customer the payment was accepted."</span><span class="p">}</span>
+<pre class="highlight plaintext"><code>
+ {
+  "status": "RECEIVED",
+  "transactionId": "ryAJfphyxTd1bIqR3bT0",
+  "transactionTimestamp": "2016-11-02T14:59:23Z"
+}
 
 
 </code></pre>
@@ -819,16 +763,16 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 </tr>
 </thead><tbody>
 <tr>
-<td>ProviderTransactionId</td>
-<td>The  provider’s reference ID of the payment</td>
+<td>status</td>
+<td>The status of the payment</td>
 </tr>
 <tr>
-<td>Status</td>
-<td>The status of the payment:</td>
+<td>transactionId</td>
+<td>The unique reference for the payment</td>
 </tr>
 <tr>
-<td>Description</td>
-<td>Tne description message</td>
+<td>transactionTimestamp</td>
+<td>The datetime of the payment in UTC ISO format.</td>
 </tr>
 </tbody></table>
 <h2 id='errors-code'>Errors code</h2>
@@ -1022,7 +966,7 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/XMLPay</p>
 <td>Status of the request : Accepted</td>
 </tr>
 </tbody></table>
-<h3 id='response-payload-5'>Response Payload</h3>
+<h3 id='response-payload-4'>Response Payload</h3>
 <p>Upon the successful processing of the POST request, a XML response will be return : </p>
 <pre class="highlight xml tab-xml"><code>
 <span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
