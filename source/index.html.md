@@ -236,12 +236,12 @@ Upon the successful processing of the GET request, a JSON encoded response will 
 
 Parameter | description 
 ---------- | ------- 
-minimum_payment | Amount required for switch on (NULL if customer has no equipment installed)
-down_payment | Amount required to allow installation
-last_payments | List of Customers last 3 payments, including currency, ammount, reference and timestamp 
-daily_rate | Cost of single day of energy
-expire_date | Date equipment will shut down if no further payments made
-phone_numbers | List of customer phone numbers including prefered_phone option
+minimum_payment <br><font color="DarkGray">_int_</font><br>| Amount required for switch on (NULL if customer has no equipment installed)
+down_payment <br><font color="DarkGray">_int_</font><br>| Amount required to allow installation
+last_payments <br><font color="DarkGray">_JSON Object_</font><br>| List of Customers last 3 payments, including currency, ammount, reference and timestamp 
+daily_rate <br><font color="DarkGray">_double_</font><br>| Cost of single day of energy
+expire_date <br><fot color="DarkGray">_String_</font><br>| Date equipment will shut down if no further payments made
+phone_numbers <br><font color="DarkGray">_int_</font><br>| List of customer phone numbers including prefered_phone option
 
 
 
@@ -363,9 +363,9 @@ Upon the successful processing of the POST request, a JSON encoded response will
 
 Parameter | description 
 ---------- | ------- 
-ProviderTransactionId | The  provider’s reference ID of the payment 
-Status | The status of the payment: 
-Description | Tne description message  
+ProviderTransactionId <br><font color="DarkGray">_String_</font><br>| The  provider’s reference ID of the payment 
+Status <br><font color="DarkGray">_String_</font><br>| The status of the payment: 
+Description <br><font color="DarkGray">_String_</font><br>| Tne description message  
 
 
 
