@@ -447,9 +447,9 @@ Upon the successful processing of the POST request, a JSON encoded response will
 
 Parameter | description 
 ---------- | ------- 
-status | The status of the payment
-transactionId | The unique reference for the payment  
-transactionTimestamp | The datetime of the payment in UTC ISO format. 
+status <br><font color="DarkGray">_String_</font><br>| The status of the payment
+transactionId <br><font color="DarkGray">_String_</font><br>| The unique reference for the payment  
+transactionTimestamp <br><font color="DarkGray">_String_</font><br>| The datetime of the payment in UTC ISO format. 
 
 
 
