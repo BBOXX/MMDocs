@@ -255,7 +255,7 @@ The POST request will be sent to the following URL:
 https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{provider_id}/customers/{customer_id}/phones/{phone_number}
 
 ### Headers
-```bundle exec middleman server```
+
 ```
 Content-Type:application/json
 Authorization:12345:XXXXXXXXXXXX=
@@ -286,7 +286,7 @@ Parameter | description
 result <br><font color="DarkGray">_String_</font><br>| Message confirming process complete
 error <br><font color="DarkGray">_JSON Object_</font><br>| Error message object, including description, error_code and status_code
 
-## [Delete] Remove Customer Phone Number
+## [DELETE] Remove Customer Phone Number
 
 
 ### Description
