@@ -240,6 +240,7 @@ minimum_payment <br><font color="DarkGray">_int_</font><br>| Amount required for
 down_payment <br><font color="DarkGray">_int_</font><br>| Amount required to allow installation
 last_payments <br><font color="DarkGray">_JSON Object_</font><br>| List of Customers last 3 payments, including currency, ammount, reference and timestamp 
 daily_rate <br><font color="DarkGray">_double_</font><br>| Cost of single day of energy
+full_name <br><font color="DarkGray">_String_</font><br>| Customers full name
 expire_date <br><fot color="DarkGray">_String_</font><br>| Date equipment will shut down if no further payments made
 phone_numbers <br><font color="DarkGray">_int_</font><br>| List of customer phone numbers including prefered_phone option
 
