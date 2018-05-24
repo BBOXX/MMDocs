@@ -509,18 +509,29 @@ MessageID | A globaly unique identifier for every request. Generate using UUID4 
 
 <p>The POST request will be sent to the following URL:
 https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{provider_id}/customers/{customer_id}/phones/{phone_number}</p>
-<h3 id='headers-2'>Headers</h3>
-<p><code>bundle exec middleman server</code>
-<code>
-Content-Type:application/json
+<h3 id='headers-2'>Headers</h3><pre class="highlight plaintext"><code>Content-Type:application/json
 Authorization:12345:XXXXXXXXXXXX=
 MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-</code>
-Name | description 
----------- | ------- 
-Content-Type | If a request payload is sent, it should always be a JSON string 
-Authorization | The customerId combined with the signature. (See Authentication section)
-MessageID | A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness</p>
+</code></pre>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Content-Type</td>
+<td>If a request payload is sent, it should always be a JSON string</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>The customerId combined with the signature. (See Authentication section)</td>
+</tr>
+<tr>
+<td>MessageID</td>
+<td>A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness</td>
+</tr>
+</tbody></table>
 <h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
 <tr>
