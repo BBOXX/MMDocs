@@ -275,6 +275,17 @@ provider_id |  The Mobile Operator provider ID that initiated the request. This 
 customer_id |  A unqiue identifier that represents the customer who made the payment.
 phone_number | The phone number that you would like to add to the customers account (excluding country code).
 
+### Response Payload 
+
+
+Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: 
+
+
+Parameter | description 
+---------- | ------- 
+result <br><font color="DarkGray">_String_</font><br>| Message confirming process complete
+error <br><font color="DarkGray">_JSON Object_</font><br>| Error message object, including description, error_code and status_code
+
 ## [Delete] Remove Customer Phone Number
 
 
