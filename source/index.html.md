@@ -155,7 +155,7 @@ The GET request will be sent to the following URL:
 https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{provider_id}/customers/{customer_id}
 
 ### Headers
-
+```bundle exec middleman server```
 ```
 Content-Type:application/json
 Authorization:12345:XXXXXXXXXXXX=
@@ -244,7 +244,96 @@ full_name <br><font color="DarkGray">_String_</font><br>| Customers full name
 expire_date <br><font color="DarkGray">_String_</font><br>| Date equipment will shut down if no further payments made
 phone_numbers <br><font color="DarkGray">_int_</font><br>| List of customer phone numbers including prefered_phone option
 
+## [POST] Add Customer Phone Number 
 
+
+### Description
+Add phone number to customer account. 
+
+
+The POST request will be sent to the following URL:
+https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{provider_id}/customers/{customer_id}/phones/{phone_number}
+
+### Headers
+```bundle exec middleman server```
+```
+Content-Type:application/json
+Authorization:12345:XXXXXXXXXXXX=
+MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+```
+Name | description 
+---------- | ------- 
+Content-Type | If a request payload is sent, it should always be a JSON string 
+Authorization | The customerId combined with the signature. (See Authentication section)
+MessageID | A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness
+
+### URL Parameters
+
+Fields | description 
+---------- | ------- 
+provider_id |  The Mobile Operator provider ID that initiated the request. This is the same for all requests. 
+customer_id |  A unqiue identifier that represents the customer who made the payment.
+phone_number | The phone number that you would like to add to the customers account (excluding country code).
+
+## [Delete] Remove Customer Phone Number
+
+
+### Description
+Remove phone numbers from customer account
+
+
+The DELETE request will be sent to the following URL:
+https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{provider_id}/customers/{customer_id)/phones/{phone_number}
+
+### Headers
+
+```
+Content-Type:application/json
+Authorization:12345:XXXXXXXXXXXX=
+MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+MessageTimestamp:yyyyMMddHHmmss
+```
+
+Name | description 
+---------- | ------- 
+Content-Type | If a request payload is sent, it should always be a JSON string 
+Authorization | The customerId combined with the signature. (See Authentication section)
+MessageID | A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness
+MessageTimestamp | The timestamp of the payment in UTC timezone with the yyyyMMddHHmmss format
+
+### URL Parameters
+Name | description 
+---------- | ------- 
+providerId |  The Mobile Operator provider ID that initiated the request. This is the same for all requests. 
+customerId |  A unqiue identifier that represents the customer who made the payment. Depending on the provider this can be an account number, email address, internal identifier
+phone_number | The phone number that you would like to remove from the customers account (excluding country code).
+
+### Response Payload 
+
+
+Upon the successful processing of the DELETE request, a JSON encoded response will be return in the following format: 
+
+
+```
+
+ {"result": "PHONE_NUMBER_REMOVED"}
+ 
+ or
+ {
+  "error": {
+    "description": "Unable to find a customer with the given cuustomer_id.",
+    "error_code": "CUSTOMER_NOT_FOUND",
+    "status_code": 404
+   }
+ }
+
+
+```
+
+Parameter | description 
+---------- | ------- 
+result <br><font color="DarkGray">_String_</font><br>| Message confirming process complete
+error <br><font color="DarkGray">_JSON Object_</font><br>| Error message object, including description, error_code and status_code
 
 ## [POST] Payment
 
