@@ -218,6 +218,7 @@ Upon the successful processing of the GET request, a JSON encoded response will 
             "timestamp": "2018-04-13T13:40:38Z"
         }
     ],
+    "package": "BBOXX Standard Kit"
     "daily_rate": null,
     "full_name": "BOB SMITH",
     "expire_date": null,
@@ -239,6 +240,7 @@ Parameter | description
 minimum_payment <br><font color="DarkGray">_int_</font><br>| Amount required for switch on (NULL if customer has no equipment installed)
 down_payment <br><font color="DarkGray">_int_</font><br>| Amount required to allow installation
 last_payments <br><font color="DarkGray">_JSON Object_</font><br>| List of Customers last 3 payments, including currency, ammount, reference and timestamp 
+package <br><font color ="DarkGray">_String_</font><br>| The package installed (currently hardcoded as "BBOXX Standard Kit"
 daily_rate <br><font color="DarkGray">_double_</font><br>| Cost of single day of energy
 full_name <br><font color="DarkGray">_String_</font><br>| Customers full name
 expire_date <br><font color="DarkGray">_String_</font><br>| Date equipment will shut down if no further payments made
