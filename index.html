@@ -662,8 +662,11 @@ MessageTimestamp:yyyyMMddHHmmss
 <h2 id='post-payment'>[POST] Payment</h2><h3 id='description-4'>Description</h3>
 <p>This endpoint allows for a payment to be created. </p>
 
-<p>The POST request will be sent to the following URL:
-https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/{providerId}/customers/{customerId}/payments</p>
+<p>The POST request will be sent to the following URL:</p>
+<h4 id='version-1'>Version 1</h4>
+<p>https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/{providerId}/customers/{customerId}/payments</p>
+<h4 id='version-2'>Version 2</h4>
+<p>https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/<originId>/customers/<customerId>/payments</p>
 <h3 id='headers-4'>Headers</h3><pre class="highlight plaintext"><code>Content-Type:application/json
 Authorization:12345:XXXXXXXXXXXX=
 MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -792,25 +795,30 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 <h3 id='response-payload-4'>Response Payload</h3>
 <p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: </p>
 <pre class="highlight plaintext"><code>
- {
+ #### Version 1
+{
   "status": "ACCEPTED",
   "first_name": "James",
   "last_name": "Bond",
-  "reference": "XGDJDNF",
-  "countryCode": "KE",
-  "providerTransactionId": 1642572,
-  "transaction_type": "PayBill",
-  "subscriber": "00000000",
-  "currency": "XOF",
-  "amount": 150,
-  "account_number": "1234134",
-  "operator": "Test Payments Company",
-  "transactionId": "kXr5zLQG89HI43l8pfSR",
-  "smsMessage": "Dear Customer the payment was accepted."
+  "amountTargetCurrency": 0,
+  "reference": "17",
+  "providerTransactionId": 1642621,
+  "exchangeRate": 0,
+  "subscriber": "76299583",
+  "currency": "CFA",
+  "amount": 7500,
+  "transactionId": "12341",
+  "smsMessage": "Dear Customer the payment was accepted.",
+  "amountTargetValue": 0
+}
+
+#### Version 2 
+{
+  "result": "PAYMENT_ACCEPTED"
 }
 
 
-</code></pre>
+</code></pre><h4 id='version-1-2'>Version 1</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -818,16 +826,68 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 </tr>
 </thead><tbody>
 <tr>
-<td>ProviderTransactionId <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>status <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>The status of the payment: ACCEPTED</td>
+</tr>
+<tr>
+<td>first_name <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>First name of the person who made the payment</td>
+</tr>
+<tr>
+<td>last_name <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>Last name of the person who made the payment</td>
+</tr>
+<tr>
+<td>reference <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>The unique reference of the payment</td>
+</tr>
+<tr>
+<td>countryCode <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>Country code in format (ISO 3166-1 alpha-2)</td>
+</tr>
+<tr>
+<td>providerTransactionId <br><font color="DarkGray"><em>String</em></font><br></td>
 <td>The  provider’s reference ID of the payment</td>
 </tr>
 <tr>
-<td>Status <br><font color="DarkGray"><em>String</em></font><br></td>
-<td>The status of the payment:</td>
+<td>exchangeRate <br><font color="DarkGray"><em>Float</em></font><br></td>
+<td>The exchange rate sent in the payment</td>
 </tr>
 <tr>
-<td>Description <br><font color="DarkGray"><em>String</em></font><br></td>
-<td>Tne description message</td>
+<td>subscriber <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>The subscriber</td>
+</tr>
+<tr>
+<td>currency <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>The 3 letter currency code used in the payment</td>
+</tr>
+<tr>
+<td>amount <br><font color="DarkGray"><em>Float</em></font><br></td>
+<td>The amount of the payment</td>
+</tr>
+<tr>
+<td>transactionId <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>The transaction id of the payment</td>
+</tr>
+<tr>
+<td>smsMessage <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>UNUSED field which can be use to send an SMS to the customer</td>
+</tr>
+<tr>
+<td>amountTargetValue <br><font color="DarkGray"><em>Float</em></font><br></td>
+<td>The amount of the payment after currency conversion</td>
+</tr>
+</tbody></table>
+<h4 id='version-2-2'>Version 2</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>result <br><font color="DarkGray"><em>String</em></font><br></td>
+<td>The status of the payment. Should be: PAYMENT_ACCEPTED</td>
 </tr>
 </tbody></table>
 <h2 id='get-payment'>[GET] Payment</h2><pre class="highlight shell tab-shell"><code>
