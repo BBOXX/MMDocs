@@ -356,7 +356,12 @@ This endpoint allows for a payment to be created.
 
 
 The POST request will be sent to the following URL:
+
+#### Version 1
 https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/{providerId}/customers/{customerId}/payments
+
+#### Version 2 
+https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/<originId>/customers/<customerId>/payments
 
 ### Headers
 
@@ -444,31 +449,54 @@ Upon the successful processing of the POST request, a JSON encoded response will
 
 ```
 
- {
+ #### Version 1
+{
   "status": "ACCEPTED",
   "first_name": "James",
   "last_name": "Bond",
-  "reference": "XGDJDNF",
-  "countryCode": "KE",
-  "providerTransactionId": 1642572,
-  "transaction_type": "PayBill",
-  "subscriber": "00000000",
-  "currency": "XOF",
-  "amount": 150,
-  "account_number": "1234134",
-  "operator": "Test Payments Company",
-  "transactionId": "kXr5zLQG89HI43l8pfSR",
-  "smsMessage": "Dear Customer the payment was accepted."
+  "amountTargetCurrency": 0,
+  "reference": "17",
+  "providerTransactionId": 1642621,
+  "exchangeRate": 0,
+  "subscriber": "76299583",
+  "currency": "CFA",
+  "amount": 7500,
+  "transactionId": "12341",
+  "smsMessage": "Dear Customer the payment was accepted.",
+  "amountTargetValue": 0
+}
+ 
+#### Version 2 
+{
+  "result": "PAYMENT_ACCEPTED"
 }
 
 
 ```
 
+#### Version 1
+
 Parameter | description 
 ---------- | ------- 
-ProviderTransactionId <br><font color="DarkGray">_String_</font><br>| The  provider’s reference ID of the payment 
-Status <br><font color="DarkGray">_String_</font><br>| The status of the payment: 
-Description <br><font color="DarkGray">_String_</font><br>| Tne description message  
+status <br><font color="DarkGray">_String_</font><br>| The status of the payment: ACCEPTED
+first_name <br><font color="DarkGray">_String_</font><br>| First name of the person who made the payment
+last_name <br><font color="DarkGray">_String_</font><br>| Last name of the person who made the payment
+reference <br><font color="DarkGray">_String_</font><br>| The unique reference of the payment 
+countryCode <br><font color="DarkGray">_String_</font><br>| Country code in format (ISO 3166-1 alpha-2)
+providerTransactionId <br><font color="DarkGray">_String_</font><br>| The  provider’s reference ID of the payment 
+exchangeRate <br><font color="DarkGray">_Float_</font><br>| The exchange rate sent in the payment 
+subscriber <br><font color="DarkGray">_String_</font><br>| The subscriber
+currency <br><font color="DarkGray">_String_</font><br>| The 3 letter currency code used in the payment
+amount <br><font color="DarkGray">_Float_</font><br>| The amount of the payment
+transactionId <br><font color="DarkGray">_String_</font><br>| The transaction id of the payment
+smsMessage <br><font color="DarkGray">_String_</font><br>| UNUSED field which can be use to send an SMS to the customer
+amountTargetValue <br><font color="DarkGray">_Float_</font><br>| The amount of the payment after currency conversion
+
+#### Version 2
+
+Parameter | description 
+---------- | ------- 
+result <br><font color="DarkGray">_String_</font><br>| The status of the payment. Should be: PAYMENT_ACCEPTED
 
 
 
