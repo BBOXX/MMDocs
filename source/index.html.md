@@ -361,7 +361,7 @@ The POST request will be sent to the following URL:
 https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/{providerId}/customers/{customerId}/payments
 
 #### Version 2 
-https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/<originId>/customers/<customerId>/payments
+https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{providerId}/customers/{customerId}/payments
 
 ### Headers
 
