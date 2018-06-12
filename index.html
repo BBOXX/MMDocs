@@ -275,7 +275,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='bboxx-rest-api'>BBOXX REST API</h1><h2 id='introduction'>Introduction</h2>
-<p>The BBOXX Pulse API allows developers to integrate third-party applications with BBOXX. This documentation provides the technical information about integrating and configuring a payment system to send payment information to BBOXX. Companies can use this API to allow real-time mobile money transactions to be processed in Pulse. </p>
+<p>The BBOXX Pulse API allows developers to integrate third-party applications with BBOXX. This documentation provides the technical information about integrating and configuring a payment system to send payment information to BBOXX. Companies can use this API to allow real-time mobile money transactions to be processed in Pulse.</p>
 
 <p><a href="pdf/BBOXX%20Mobile%20Money%20Payment%20Process%20Flowchart.pdf">Click Here</a> for more information about the BBOXX&#39;s Mobile Money process.</p>
 <h2 id='authentication'>Authentication</h2><pre class="highlight python tab-python"><code><span class="c"># How to Generate the "Authorization" header in Python</span>
@@ -311,7 +311,7 @@
 <span class="kn">import</span> <span class="nn">java.security.InvalidKeyException</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.crypto.Mac</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.crypto.spec.SecretKeySpec</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.commons.codec.binary.Base64</span><span class="o">;</span> 
+<span class="kn">import</span> <span class="nn">org.apache.commons.codec.binary.Base64</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">GenerateSignature</span><span class="o">{</span>
 
@@ -377,10 +377,10 @@
 <p>Steps to create the <code>Authorization</code> header:</p>
 
 <ol>
-<li>First, combine the following 4 fields into one large <code>payload</code> (<em>NOTE</em> The order is important): 
+<li>First, combine the following 4 fields into one large <code>payload</code> (<em>NOTE</em> The order is important):
 
 <ul>
-<li>The Request body </li>
+<li>The Request body</li>
 <li>The <code>messageID</code> field</li>
 <li>The <code>providerId</code> field</li>
 <li>The <code>customerId</code> field</li>
@@ -391,22 +391,33 @@
 <li>Then create the “Authorization” header by combining the <code>customerId</code> and the <code>signature</code> seperated by a colon <code>:</code></li>
 </ol>
 <h2 id='get-customer-details'>[GET] Customer Details</h2><h3 id='description'>Description</h3>
-<p>Retrieve customer payment information. </p>
+<p>Retrieve customer payment information.</p>
 
 <p>The GET request will be sent to the following URL:
 https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{provider_id}/customers/{customer_id}</p>
-<h3 id='headers'>Headers</h3>
-<p><code>bundle exec middleman server</code>
-<code>
-Content-Type:application/json
+<h3 id='headers'>Headers</h3><pre class="highlight plaintext"><code>Content-Type:application/json
 Authorization:12345:XXXXXXXXXXXX=
 MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-</code>
-Name | description 
----------- | ------- 
-Content-Type | If a request payload is sent, it should always be a JSON string 
-Authorization | The customerId combined with the signature. (See Authentication section)
-MessageID | A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness</p>
+</code></pre>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Content-Type</td>
+<td>If a request payload is sent, it should always be a JSON string</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>The customerId combined with the signature. (See Authentication section)</td>
+</tr>
+<tr>
+<td>MessageID</td>
+<td>A globaly unique identifier for every request. Generate using UUID4 to ensure uniqueness</td>
+</tr>
+</tbody></table>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -432,13 +443,13 @@ MessageID | A globaly unique identifier for every request. Generate using UUID4 
 <span class="n">header</span> <span class="o">=</span><span class="p">{</span><span class="s">'Content-Type'</span><span class="p">:</span><span class="s">'application/json'</span>
         <span class="s">'Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span>
         <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46dafsf-8bbadafdsfdsffdb4c'</span><span class="p">,</span>
-        <span class="s">'Authorization'</span><span class="p">:</span><span class="s">'{{Authorization}}'</span><span class="p">}</span> 
+        <span class="s">'Authorization'</span><span class="p">:</span><span class="s">'{{Authorization}}'</span><span class="p">}</span>
 
 
 <span class="n">post</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span> <span class="n">header</span><span class="p">)</span>
 
 </code></pre><h3 id='response-payload'>Response Payload</h3>
-<p>Upon the successful processing of the GET request, a JSON encoded response will be return in the following format: </p>
+<p>Upon the successful processing of the GET request, a JSON encoded response will be return in the following format:</p>
 <pre class="highlight plaintext"><code>{
     "minimum_payment": null,
     "down_payment": null,
@@ -510,7 +521,7 @@ MessageID | A globaly unique identifier for every request. Generate using UUID4 
 </tr>
 </tbody></table>
 <h2 id='post-add-customer-phone-number'>[POST] Add Customer Phone Number</h2><h3 id='description-2'>Description</h3>
-<p>Add phone number to customer account. </p>
+<p>Add phone number to customer account.</p>
 
 <p>The POST request will be sent to the following URL:
 https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{provider_id}/customers/{customer_id}/phones/{phone_number}</p>
@@ -558,7 +569,7 @@ MessageID:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 </tr>
 </tbody></table>
 <h3 id='response-payload-2'>Response Payload</h3>
-<p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: </p>
+<p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format:</p>
 
 <table><thead>
 <tr>
@@ -629,7 +640,7 @@ MessageTimestamp:yyyyMMddHHmmss
 </tr>
 </tbody></table>
 <h3 id='response-payload-3'>Response Payload</h3>
-<p>Upon the successful processing of the DELETE request, a JSON encoded response will be return in the following format: </p>
+<p>Upon the successful processing of the DELETE request, a JSON encoded response will be return in the following format:</p>
 <pre class="highlight plaintext"><code>
  {"result": "PHONE_NUMBER_REMOVED"}
 
@@ -660,7 +671,7 @@ MessageTimestamp:yyyyMMddHHmmss
 </tr>
 </tbody></table>
 <h2 id='post-payment'>[POST] Payment</h2><h3 id='description-4'>Description</h3>
-<p>This endpoint allows for a payment to be created. </p>
+<p>This endpoint allows for a payment to be created.</p>
 
 <p>The POST request will be sent to the following URL:</p>
 <h4 id='version-1'>Version 1</h4>
@@ -714,9 +725,9 @@ MessageTimestamp:yyyyMMddHHmmss
 <h3 id='request-payload-2'>Request Payload</h3>
 <p>Following table provides information of each JSON field of the HTTP request body:</p>
 <pre class="highlight shell tab-shell"><code>
-curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Content-Type: application/json"</span> 
+curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Content-Type: application/json"</span>
  -H <span class="s2">"Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y="</span> -H <span class="s2">"SMSSupport:Y"</span>
- -H <span class="s2">"MessageID:74e46da-41ff-8bba-f529-930acbffdb4c"</span>, -H <span class="s2">"MessageTimestamp:20161029113022"</span> 
+ -H <span class="s2">"MessageID:74e46da-41ff-8bba-f529-930acbffdb4c"</span>, -H <span class="s2">"MessageTimestamp:20161029113022"</span>
  -X GET -d <span class="s1">'{"transactionId" : "123647","reference" : "bill-0001","operator" : "Mobile_provider","subscriber" : "243858606953","countryCode" : "CD","transaction_type": "PayBill","first_name": "Jhon","account_number":"45678","last_name":  "Doe","amountTargetValue":  78.79,"amountTargetCurrency":  "GBP","exchangeRate":  1.38,"currency" : "USD","amount" : 100.00 }'</span>
 https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/customers/243858606953/payments
 
@@ -728,19 +739,19 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 <span class="n">Headers</span> <span class="o">=</span><span class="p">{</span><span class="s">' Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span>
         <span class="s">'SMSSupport:Y'</span> <span class="p">,</span>
         <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46da2-41ff-8bba-f529-930acbffdb4c'</span><span class="p">,</span>
-        <span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span> 
+        <span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span>
 
 <span class="n">body</span> <span class="o">=</span> <span class="s">'{"transactionId" : "123647",</span><span class="err">
 </span><span class="s">        "reference" : "4526",</span><span class="err">
-</span><span class="s">        "operator" : "Mobile_provider", </span><span class="err">
-</span><span class="s">        "subscriber" : "250786474859", </span><span class="err">
-</span><span class="s">        "countryCode" : "RW", </span><span class="err">
-</span><span class="s">        "currency" : "RWF", </span><span class="err">
+</span><span class="s">        "operator" : "Mobile_provider",</span><span class="err">
+</span><span class="s">        "subscriber" : "250786474859",</span><span class="err">
+</span><span class="s">        "countryCode" : "RW",</span><span class="err">
+</span><span class="s">        "currency" : "RWF",</span><span class="err">
 </span><span class="s">        "transaction_type": "PayBill"</span><span class="err">
 </span><span class="s">        "first_name": "Jhon",</span><span class="err">
 </span><span class="s">        "account_number":"45678",</span><span class="err">
 </span><span class="s">        "last_name": "Doe",</span><span class="err">
-</span><span class="s">        "amount" : 200.0 }'</span> 
+</span><span class="s">        "amount" : 200.0 }'</span>
 
 <span class="n">post</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span> <span class="n">header</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span> <span class="n">body</span><span class="p">)</span>
 
@@ -793,7 +804,7 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 </tr>
 </tbody></table>
 <h3 id='response-payload-4'>Response Payload</h3>
-<p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: </p>
+<p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format:</p>
 <pre class="highlight plaintext"><code>
  #### Version 1
 {
@@ -812,7 +823,7 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
   "amountTargetValue": 0
 }
 
-#### Version 2 
+#### Version 2
 {
   "result": "PAYMENT_ACCEPTED"
 }
@@ -891,11 +902,11 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 </tr>
 </tbody></table>
 <h2 id='get-payment'>[GET] Payment</h2><pre class="highlight shell tab-shell"><code>
-curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Content-Type: application/json"</span> 
- -H <span class="s2">"Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y="</span> 
+curl -H <span class="s2">"Accept: application/json"</span> -H <span class="s2">"Content-Type: application/json"</span>
+ -H <span class="s2">"Authorization:243858606953:9HkobKxzuAiK4j9bHbi80HDMG+Y="</span>
  -H <span class="s2">"SMSSupport:Y"</span>
- -H <span class="s2">"MessageID:74e46da-41ff-8bba-f529-930acbffdb4c"</span>, 
- -H <span class="s2">"MessageTimestamp:20161029113022"</span> 
+ -H <span class="s2">"MessageID:74e46da-41ff-8bba-f529-930acbffdb4c"</span>,
+ -H <span class="s2">"MessageTimestamp:20161029113022"</span>
 https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/customers/243858606953/payments
 
 </code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -903,7 +914,7 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 <span class="n">url</span> <span class="o">=</span>  <span class="s">'https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/200/customers/12000/payments'</span>
 
 <span class="n">Headers</span><span class="o">=</span><span class="p">{</span><span class="s">' Authorization'</span><span class="p">:</span><span class="s">'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8='</span><span class="p">,</span> <span class="s">'SMSSupport:Y'</span> <span class="p">,</span>
-          <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46da2-41ff-8bba-f529-930acbffdb4c'</span><span class="p">,</span><span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span> 
+          <span class="s">'MessageID'</span><span class="p">:</span><span class="s">'74e46da2-41ff-8bba-f529-930acbffdb4c'</span><span class="p">,</span><span class="s">'MessageTimestamp'</span><span class="p">:</span><span class="s">'20161029113022'</span><span class="p">}</span>
 
 <span class="n">post</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
 </code></pre><h3 id='description-5'>Description</h3>
@@ -960,7 +971,7 @@ MessageTimestamp:yyyyMMddHHmmss
 </tr>
 </tbody></table>
 <h3 id='response-payload-5'>Response Payload</h3>
-<p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format: </p>
+<p>Upon the successful processing of the POST request, a JSON encoded response will be return in the following format:</p>
 <pre class="highlight plaintext"><code>
  {
   "status": "RECEIVED",
@@ -1060,9 +1071,9 @@ MessageTimestamp:yyyyMMddHHmmss
 
 <p>Like many web services, BBOXX SOAP API is a combination of client-side and server-side schemas.</p>
 <h2 id='authentication-2'>Authentication</h2>
-<p>When you call BBOXX SOAP API, you must authenticate each request by using a username and password provided using &quot;BASIC Authentication&quot;. </p>
+<p>When you call BBOXX SOAP API, you must authenticate each request by using a username and password provided using &quot;BASIC Authentication&quot;.</p>
 <h3 id='how-basic-authentication-works'>How Basic Authentication Works</h3><pre class="highlight shell tab-shell"><code>
- curl -H <span class="s2">"Content-Type: text/xml"</span> -u MobileProvider:3drvJjs9#324Qfa 
+ curl -H <span class="s2">"Content-Type: text/xml"</span> -u MobileProvider:3drvJjs9#324Qfa
  -X POST -d @Payment.xml -i  https://payments-test.bboxx.co.uk/pulseapi/mm/XMLPay
 
 
@@ -1077,7 +1088,7 @@ MessageTimestamp:yyyyMMddHHmmss
 
 <p>Since the base64 encoded string can easily be decoded, this method is highly insecure to be used on an open network. Hence this method should only be used for debugging and development purposes when the connection between the server and the client is trusted.</p>
 <h2 id='request'>Request</h2><h4 id='description-6'>Description</h4>
-<p>This endpoint allows for a payment to be created. </p>
+<p>This endpoint allows for a payment to be created.</p>
 
 <p>The POST request will be sent to the following URL:
 https://payments-test.bboxx.co.uk/pulseapi/mm/XMLPay</p>
@@ -1091,15 +1102,15 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/XMLPay</p>
     <span class="nt">&lt;SOAP-ENV:Body&gt;</span>
         <span class="nt">&lt;ns1</span> <span class="err">paymentDone</span><span class="nt">&gt;</span>
         <span class="nt">&lt;countryCode&gt;</span>TG<span class="nt">&lt;/countryCode&gt;</span>
-        <span class="nt">&lt;transactionId&gt;</span>123647<span class="nt">&lt;/transactionId&gt;</span> 
+        <span class="nt">&lt;transactionId&gt;</span>123647<span class="nt">&lt;/transactionId&gt;</span>
         <span class="nt">&lt;reference&gt;</span>4526<span class="nt">&lt;/reference&gt;</span>
         <span class="nt">&lt;operator&gt;</span>BBOXX Telecom<span class="nt">&lt;/operator&gt;</span>
         <span class="nt">&lt;subscriber&gt;</span>250786474859<span class="nt">&lt;/subscriber&gt;</span>
         <span class="nt">&lt;transaction_type&gt;</span>PayBill<span class="nt">&lt;/transaction_type&gt;</span>
-        <span class="nt">&lt;first_name&gt;</span>Jhon<span class="nt">&lt;/first_name&gt;</span> 
-        <span class="nt">&lt;account_number&gt;</span>45678<span class="nt">&lt;/account_number&gt;</span> 
-        <span class="nt">&lt;last_name&gt;</span>Doe<span class="nt">&lt;/last_name&gt;</span> 
-        <span class="nt">&lt;amount&gt;</span>10000.00<span class="nt">&lt;/amount&gt;</span> 
+        <span class="nt">&lt;first_name&gt;</span>Jhon<span class="nt">&lt;/first_name&gt;</span>
+        <span class="nt">&lt;account_number&gt;</span>45678<span class="nt">&lt;/account_number&gt;</span>
+        <span class="nt">&lt;last_name&gt;</span>Doe<span class="nt">&lt;/last_name&gt;</span>
+        <span class="nt">&lt;amount&gt;</span>10000.00<span class="nt">&lt;/amount&gt;</span>
         <span class="nt">&lt;currency&gt;</span>CFA <span class="nt">&lt;/currency&gt;</span>
         <span class="nt">&lt;amountTargetValue&gt;</span>18.60 <span class="nt">&lt;/amountTargetValue&gt;</span>
         <span class="nt">&lt;amountTargetCurrency&gt;</span>USD<span class="nt">&lt;/amountTargetCurrency&gt;</span>
@@ -1181,7 +1192,7 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/XMLPay</p>
 </tr>
 </tbody></table>
 <h3 id='response-payload-6'>Response Payload</h3>
-<p>Upon the successful processing of the POST request, a XML response will be return : </p>
+<p>Upon the successful processing of the POST request, a XML response will be return :</p>
 <pre class="highlight xml tab-xml"><code>
 <span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
   <span class="nt">&lt;SOAP-ENV:Envelope</span> <span class="na">xmlns:SOAP-ENV=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span> <span class="nt">&gt;</span>
