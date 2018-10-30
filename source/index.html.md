@@ -7,7 +7,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - java
 
 toc_footers:
-  - <a href='https://github.com/lord/slate'>Sign Up for a Developer Key</a>
+  - <a href='https://support.bboxx.co.uk'>Click here to access BBOXX support</a>
 
 
 search: true
@@ -604,7 +604,7 @@ Code Error | description | Exemple
 4007 |  Operation not succeed  | Invalid message format.
 4008 | Field value length too large | Field value exceeded the maximum length allowed.
 4009 |  Transaction ID not found   | The transaction ID provided was not found.
-40010|  Duplicate Transaction ID | The Customer for provided customerID was not found in system.
+40010|  Duplicate Transaction ID | A payment with the same transaction ID has already been received.
 
 
 
@@ -771,6 +771,6 @@ Code Error | description | Exemple
 4007 |  Operation not succeed  | Invalid message format.
 4008 | Field value length too large | Field value exceeded the maximum length allowed.
 4009 |  Transaction ID not found   | The transaction ID provided was not found.
-40010|  Duplicate Transaction ID | The Customer for provided customerID was not found in system.
+40010|  Duplicate Transaction ID | A payment with the same transaction ID has already been received.
 
 
