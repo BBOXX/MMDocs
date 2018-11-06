@@ -7,7 +7,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - java
 
 toc_footers:
-  - <a href='https://support.bboxx.co.uk'>Click here to access BBOXX support</a>
+  - <a href='http://support.bboxx.co.uk'>Click here to access BBOXX support</a>
 
 
 search: true
