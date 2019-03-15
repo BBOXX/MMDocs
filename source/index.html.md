@@ -28,7 +28,7 @@ The BBOXX Pulse API allows developers to integrate third-party applications with
 ## Authentication
 
 ```python
-# How to Generate the "Authorization" header in Python
+# How to Generate the "Authorization" header in Python 2.7
 
 import hmac
 from hashlib import sha1
@@ -51,6 +51,34 @@ payload = body + messageId + providerId + customerId
 signature = generate_signature("supersecurekey",payload)
 # Construct Authorization Header
 authHeader = "Authorization: " + customerId + ":" + signature;
+
+print(authHeader)
+
+# How to Generate the "Authorization" header in Python 3
+
+import base64
+import hmac
+from hashlib import sha1
+
+def generate_signature():
+    raw_signature = hmac.new(shared_secret.encode('utf-8'), payload.encode('utf-8'), sha1)
+    signature = base64.encodebytes(raw_signature.digest()).decode('utf-8').rstrip('\n')
+    return signature
+
+# Example Request Data
+customer_id  = "123";
+body        = "{\"name\":\"Bob\",\"amount\":32}"
+message_id   = "a2536ff7-886a-432d-a5ae-45ed9d12b016"
+provider_id  = "12345"
+
+# Payload must be contructed in this order
+payload = body + ("%s%s%s" % (message_id, provider_id, customer_id)).encode('utf-8')
+
+# Generate Signature
+shared_secret = "supersecretkey"
+signature = generate_signature()
+# Construct Authorization Header
+authHeader = "Authorization: " + customer_id + ":" + signature;
 
 print(authHeader)
 
@@ -357,10 +385,10 @@ This endpoint allows for a payment to be created.
 The POST request will be sent to the following URL:
 
 #### Version 1
-https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/{providerId}/customers/{customerId}/payments
+https://payments.bboxx.co.uk/app/1.0/payments/payment/{provider_id}/customers/{customer_id}/payments
 
 #### Version 2
-https://payments-test.bboxx.co.uk/pulseapi/mm/v2/providers/{providerId}/customers/{customerId}/payments
+https://payments.bboxx.co.uk/app/v2/providers/{provider_id}/customers/{customer_id/payments
 
 ### Headers
 
@@ -381,8 +409,8 @@ MessageTimestamp | The timestamp of the payment in UTC timezone with the yyyyMMd
 ### URL Parameters
 Name | description
 ---------- | -------
-providerId |  The Mobile Operator provider ID that initiated the request. This is the same for all requests.
-customerId |  A unqiue identifier that represents the customer who made the payment. Depending on the provider this can be an account number, email address, internal identifier
+provider_id |  The Mobile Operator provider ID that initiated the request. This is the same for all requests.
+customer_id |  A unqiue identifier that represents the customer who made the payment. Depending on the provider this can be an account number, email address, phone number or internal identifier
 
 
 ### Request Payload
@@ -402,7 +430,7 @@ https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/343755867/cus
 ```python
 
 
-url = 'https://payments-test.bboxx.co.uk/pulseapi/mm/1.0/payments/payment/200/customers/12000/payments'
+url = 'https://payments.bboxx.co.uk/app/1.0/payments/payment/200/customers/12000/payments'
 
 Headers ={' Authorization':'12000:fq/LZ0n8YxOp0tC3NLaj6GbPFE8=',
         'SMSSupport:Y' ,
@@ -416,12 +444,12 @@ body = '{"transactionId" : "123647",
         "countryCode" : "RW",
         "currency" : "RWF",
         "transaction_type": "PayBill"
-        "first_name": "Jhon",
+        "first_name": "John",
         "account_number":"45678",
         "last_name": "Doe",
         "amount" : 200.0 }'
 
-post = requests.post(url=url, header= header, body= body)
+post = requests.post(url=url, header=header, body=body)
 
 ```
 
@@ -434,6 +462,7 @@ reference <br><font color="DarkGray">_string_</font><br><font color="Red">requir
 first_name <br><font color="DarkGray">_string_</font><br><font color="Red">required</font> | The first name of the subscriber
 last_name <br><font color="DarkGray">_string_</font><br><font color="Red">required</font> | The last name of the subscriber
 amount <br><font color="DarkGray">_int_</font><br><font color="Red">required</font> | The amount to be paid in local currency
+account_number <br><font color="DarkGray"> _string_</font><br><font color="Red">required</font> | The account number. Depending on the company, this could be the same as the reference or the phone number of the customer
 currency <br><font color="DarkGray">_string_</font><br><font color="Red">required</font> | The local currency reference
 amountTargetValue <br><font color="DarkGray">_int_</font>| Contains the amount to be paid in target currency
 amountTargetCurrency <br><font color="DarkGray">_int_</font>| Contains the target currency reference
@@ -497,7 +526,7 @@ Parameter | description
 ---------- | -------
 result <br><font color="DarkGray">_String_</font><br>| The status of the payment. Should be: PAYMENT_ACCEPTED
 
-
+<b>Note</b> that even if the payment is Unaccepted the code will be 200. However the error message of this request will be { "errorCode": "40010", "errorDescription": "Duplicate Transaction ID " }
 
 
 ## [GET] Payment
