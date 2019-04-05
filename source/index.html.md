@@ -16,7 +16,9 @@ search: true
 
 
 
-# BBOXX REST API
+# BBOXX REST API  ❌(DEPRECATED)❌ 
+
+> ❗️NOTE❗️: This API is deprecated please use https://payments.bboxx.co.uk/docs/
 
 ## Introduction
 
